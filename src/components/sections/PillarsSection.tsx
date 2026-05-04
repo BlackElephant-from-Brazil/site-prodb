@@ -16,13 +16,13 @@ export function PillarsSection() {
       <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
         <div className="mb-10 max-w-2xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
-            Por que escolher a ProDB
+            Como operamos
           </p>
           <h2
             id="pillars-heading"
-            className="text-2xl font-bold text-slate-900 md:text-3xl text-balance"
+            className="text-3xl font-black text-slate-900 md:text-4xl text-balance leading-tight"
           >
-            O modelo operacional que diferencia quem faz de quem promete
+            Cinco práticas que separam operar de só vender contrato
           </h2>
         </div>
 

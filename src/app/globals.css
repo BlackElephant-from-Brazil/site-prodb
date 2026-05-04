@@ -3,8 +3,9 @@
 /* ─── Design Tokens ───────────────────────────────────────────────────────── */
 @theme {
   /* Fonts — values come from Next.js font CSS vars set in layout.tsx */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans:    var(--font-dm-sans, var(--font-geist-sans));
+  --font-display: var(--font-archivo, var(--font-geist-sans));
+  --font-mono:    var(--font-geist-mono);
 
   /* Navy scale */
   --color-navy-950: #070D1A;
@@ -86,6 +87,24 @@
   /* Max widths */
   --width-content: 1184px;
   --width-prose:   720px;
+
+  /* Light-mode surface tokens */
+  --color-surface-bg:      #F4F7FB;
+  --color-surface-card:    #FFFFFF;
+  --color-surface-muted:   #EDF2F9;
+  --color-text-primary:    #0B1426;
+  --color-text-secondary:  #456080;
+  --color-text-tertiary:   #8FA5BE;
+  --color-border-light:    #DDE6F0;
+  --color-border-medium:   #C8D8EA;
+
+  /* Dark-mode surface tokens */
+  --color-dark-bg:         #060E1C;
+  --color-dark-card:       #0B1828;
+  --color-dark-raised:     #101F34;
+  --color-dark-text:       #E8F0FA;
+  --color-dark-muted:      #7294B8;
+  --color-dark-border:     rgba(255,255,255,0.07);
 }
 
 /* ─── Base Reset ───────────────────────────────────────────────────────────── */
@@ -109,6 +128,10 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), var(--font-sans), ui-sans-serif, sans-serif;
 }
 
 /* ─── Skip Link ────────────────────────────────────────────────────────────── */
@@ -140,10 +163,74 @@ body {
   color: var(--color-navy-900);
 }
 
+/* ─── Liquid Glass System ─────────────────────────────────────────────────── */
+/*
+  4-layer glass structure:
+    .glass-panel    — relative, overflow-hidden container
+    .glass-distort  — absolute inset: backdrop-filter with SVG turbulence + blur
+    .glass-overlay  — absolute inset: gradient color tint
+    .glass-specular — absolute inset: inset box-shadows for edge lighting
+    .glass-content  — relative z-10: actual content
+*/
+
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-distort,
+.glass-overlay,
+.glass-specular {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.glass-specular {
+  pointer-events: none;
+}
+
+.glass-content {
+  position: relative;
+  z-index: 3;
+}
+
+/* Dark glass preset — for glass on dark hero/navy backgrounds */
+.glass-dark .glass-distort {
+  backdrop-filter: url('#lg-refract') blur(16px) saturate(160%) brightness(0.90);
+  -webkit-backdrop-filter: blur(16px) saturate(160%) brightness(0.90);
+}
+.glass-dark .glass-overlay {
+  background: linear-gradient(145deg, rgba(11,24,40,0.80) 0%, rgba(6,14,28,0.68) 100%);
+}
+.glass-dark .glass-specular {
+  box-shadow:
+    inset 0 1px 0 rgba(14,165,201,0.38),
+    inset 1px 0 0 rgba(255,255,255,0.08),
+    inset -1px 0 0 rgba(255,255,255,0.04),
+    inset 0 -1px 0 rgba(0,0,0,0.22);
+}
+
+/* Light glass preset — for glass on light/scrolled backgrounds */
+.glass-light .glass-distort {
+  backdrop-filter: url('#lg-soft') blur(20px) saturate(180%) brightness(1.06);
+  -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.06);
+}
+.glass-light .glass-overlay {
+  background: linear-gradient(160deg, rgba(255,255,255,0.80) 0%, rgba(248,252,255,0.66) 100%);
+}
+.glass-light .glass-specular {
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,0.95),
+    inset 1px 0 0 rgba(255,255,255,0.50),
+    inset -1px 0 0 rgba(255,255,255,0.24),
+    inset 0 -1.5px 0 rgba(0,0,0,0.05);
+}
+
 /* ─── Animations ───────────────────────────────────────────────────────────── */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 
 @keyframes fade-in {
@@ -172,16 +259,102 @@ body {
   to   { height: 0; opacity: 0; }
 }
 
-.animate-fade-up    { animation: fade-up var(--duration-page) var(--ease-out) both; }
-.animate-fade-in    { animation: fade-in var(--duration-slow) var(--ease-out) both; }
-.animate-orb-drift  { animation: orb-drift 14s ease-in-out infinite; }
-.animate-spin-slow  { animation: spin 1s linear infinite; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes ripple-ring {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+@keyframes circular-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes beam-draw {
+  from { stroke-dashoffset: 800; opacity: 0; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes beam-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+
+@keyframes grid-scroll {
+  from { background-position: 0 0; }
+  to   { background-position: 0 80px; }
+}
+
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+  50%       { transform: translateY(-12px) scale(1.15); opacity: 1; }
+}
+
+@keyframes core-rotate {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+
+@keyframes core-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.85; }
+  50%       { transform: translate(-50%, -50%) scale(1.18); opacity: 1; }
+}
+
+@keyframes card-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -18; }
+}
+
+@keyframes ambient-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.05); }
+}
+
+@keyframes particle-drift {
+  0%, 100% { transform: translateY(0) scale(1);   opacity: 0.4; }
+  50%       { transform: translateY(-14px) scale(1.4); opacity: 1; }
+}
+
+@keyframes corner-glow {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+.animate-fade-up          { animation: fade-up var(--duration-page) var(--ease-out) both; }
+.animate-fade-in          { animation: fade-in var(--duration-slow) var(--ease-out) both; }
+.animate-orb-drift        { animation: orb-drift 14s ease-in-out infinite; }
+.animate-spin-slow        { animation: spin 1s linear infinite; }
+.animate-marquee          { animation: marquee 30s linear infinite; }
+.animate-circular-rotate  { animation: circular-rotate 20s linear infinite; }
+.animate-beam-draw        { animation: beam-draw 1.8s var(--ease-out) forwards; }
+.animate-beam-pulse       { animation: beam-pulse 2.5s ease-in-out infinite; }
+.animate-grid-scroll      { animation: grid-scroll 4s linear infinite; }
+.animate-particle-float   { animation: particle-float 3s ease-in-out infinite; }
+.animate-core-rotate      { animation: core-rotate 90s linear infinite; }
+.animate-core-pulse       { animation: core-pulse 4s ease-in-out infinite; }
+.animate-card-float       { animation: card-float 7s ease-in-out infinite; }
+.animate-dash-flow        { animation: dash-flow 2s linear infinite; }
+.animate-ambient-pulse    { animation: ambient-pulse 8s ease-in-out infinite; }
+.animate-particle-drift   { animation: particle-drift 6s ease-in-out infinite; }
+.animate-corner-glow      { animation: corner-glow 3s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-fade-up, .animate-fade-in, .animate-orb-drift {
+  .animate-fade-up, .animate-fade-in, .animate-orb-drift,
+  .animate-marquee, .animate-circular-rotate, .animate-beam-draw,
+  .animate-beam-pulse, .animate-grid-scroll, .animate-particle-float,
+  .animate-core-rotate, .animate-core-pulse, .animate-card-float,
+  .animate-dash-flow, .animate-ambient-pulse, .animate-particle-drift,
+  .animate-corner-glow {
     animation: none;
     opacity: 1;
-    transform: none;
   }
 }
 

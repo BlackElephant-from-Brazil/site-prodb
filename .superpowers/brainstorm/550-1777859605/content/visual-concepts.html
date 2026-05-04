@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProDB — Direção Visual</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy-950: #070D1A;
+    --navy-900: #0A1220;
+    --navy-800: #0E1B33;
+    --navy-700: #142547;
+    --cyan-400: #22D3EE;
+    --cyan-500: #0AB6E8;
+    --amber-500: #F59E0B;
+    --slate-50: #F7F8FA;
+    --slate-300: #CBD5E1;
+    --slate-400: #94A3B8;
+    --slate-500: #64748B;
+    --slate-700: #334155;
+    --slate-900: #0E1726;
+  }
+
+  body {
+    background: var(--navy-950);
+    color: var(--slate-300);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .section-label {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 11px;
+    color: var(--cyan-400);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  /* ===================== HERO — Animated Beam ===================== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 80px 24px;
+    background: var(--navy-900);
+  }
+
+  .hero-orb {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(34,211,238,0.12) 0%, rgba(34,211,238,0.04) 40%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbDrift 14s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes orbDrift {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    33% { transform: translate(-52%, -48%) scale(1.04); }
+    66% { transform: translate(-48%, -52%) scale(0.97); }
+  }
+
+  /* Animated beam SVG */
+  .beam-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  @keyframes beamMove {
+    0% { stroke-dashoffset: 1000; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+
+  .beam-path {
+    stroke-dasharray: 80 920;
+    stroke-dashoffset: 1000;
+    animation: beamMove 3s ease-in-out infinite;
+    fill: none;
+  }
+  .beam-path:nth-child(2) { animation-delay: 1s; }
+  .beam-path:nth-child(3) { animation-delay: 2s; }
+
+  /* Beam nodes */
+  .beam-nodes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .beam-node {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid rgba(34,211,238,0.3);
+    background: rgba(14,27,51,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 0 20px rgba(34,211,238,0.15);
+  }
+
+  .beam-node.pulse {
+    animation: nodePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes nodePulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(34,211,238,0.15); border-color: rgba(34,211,238,0.3); }
+    50% { box-shadow: 0 0 30px rgba(34,211,238,0.4); border-color: rgba(34,211,238,0.7); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(34,211,238,0.3);
+    background: rgba(34,211,238,0.05);
+    color: var(--cyan-400);
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cyan-400);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--cyan-400), var(--cyan-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--slate-400);
+    max-width: 580px;
+    margin: 0 auto 36px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 13px 28px;
+    border-radius: 8px;
+    background: var(--cyan-400);
+    color: var(--navy-950);
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .btn-secondary {
+    padding: 13px 28px;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--slate-300);
+    font-weight: 500;
+    font-size: 15px;
+    border: 1px solid rgba(203,213,225,0.2);
+    cursor: pointer;
+  }
+
+  /* Trust strip */
+  .trust-strip {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--slate-500);
+  }
+
+  .trust-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--cyan-400);
+  }
+
+  /* ===================== MARQUEE ===================== */
+  .marquee-section {
+    padding: 28px 0;
+    background: var(--navy-800);
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    animation: marqueeScroll 25s linear infinite;
+  }
+
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 40px;
+    color: var(--slate-500);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .marquee-icon {
+    width: 18px;
+    height: 18px;
+    background: rgba(34,211,238,0.15);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--cyan-400);
+  }
+
+  /* ===================== STATS + NUMBER COUNTER ===================== */
+  .stats-section {
+    padding: 80px 24px;
+    background: var(--navy-900);
+    text-align: center;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    max-width: 900px;
+    margin: 48px auto 0;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .stat-card {
+    background: var(--navy-800);
+    padding: 40px 24px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .stat-card:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Courier New', monospace;
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .stat-suffix {
+    color: var(--cyan-400);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--slate-500);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+  }
+
+  .counter {
+    animation: countUp 2s ease-out forwards;
+  }
+
+  @keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===================== CIRCULAR ROTATING TEXT ===================== */
+  .circular-section {
+    padding: 80px 24px;
+    background: var(--navy-800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
+
+  .circular-badge {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+  }
+
+  .circular-ring {
+    animation: rotateSlow 12s linear infinite;
+    transform-origin: center;
+  }
+
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .circular-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--navy-800);
+    border: 1px solid rgba(34,211,238,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(34,211,238,0.1);
+  }
+
+  .circular-center-text {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--slate-500);
+  }
+
+  .circular-center-year {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cyan-400);
+    font-family: 'Courier New', monospace;
+  }
+
+  .circular-content {
+    max-width: 480px;
+  }
+
+  .circular-content h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .circular-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--slate-400);
+    margin-bottom: 24px;
+  }
+
+  .cert-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .cert-chip {
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(34,211,238,0.2);
+    background: rgba(34,211,238,0.04);
+    font-size: 11px;
+    color: var(--cyan-400);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===================== SYNTHWAVE GRID ===================== */
+  .synthwave-section {
+    position: relative;
+    padding: 100px 24px;
+    overflow: hidden;
+    background: var(--navy-950);
+  }
+
+  .synthwave-grid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .grid-svg {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    min-width: 900px;
+  }
+
+  /* Scanline overlay */
+  .scanlines {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* Particles */
+  .particles {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: var(--cyan-400);
+    opacity: 0;
+    animation: particleFloat var(--dur, 4s) ease-in-out infinite var(--delay, 0s);
+  }
+
+  @keyframes particleFloat {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    20% { opacity: 0.8; transform: translateY(-20px) scale(1); }
+    80% { opacity: 0.8; transform: translateY(-60px) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(0); }
+  }
+
+  /* Glow horizon */
+  .horizon-glow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 200px;
+    background: radial-gradient(ellipse at center bottom, rgba(34,211,238,0.25) 0%, rgba(34,211,238,0.08) 40%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .synthwave-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .synthwave-content h2 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .synthwave-content h2 .glow-text {
+    color: var(--cyan-400);
+    text-shadow: 0 0 30px rgba(34,211,238,0.5), 0 0 60px rgba(34,211,238,0.2);
+  }
+
+  .synthwave-content p {
+    font-size: 17px;
+    color: var(--slate-400);
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
+
+  .infra-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 48px;
+  }
+
+  .infra-card {
+    background: rgba(14,27,51,0.8);
+    border: 1px solid rgba(34,211,238,0.12);
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-align: left;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .infra-card:hover {
+    border-color: rgba(34,211,238,0.3);
+    box-shadow: 0 0 20px rgba(34,211,238,0.08);
+  }
+
+  .infra-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(34,211,238,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: var(--cyan-400);
+  }
+
+  .infra-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .infra-card p {
+    font-size: 12px;
+    color: var(--slate-500);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .infra-card .metric {
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cyan-400);
+    margin: 8px 0 4px;
+  }
+
+  /* ===================== RIPPLE SECTION ===================== */
+  .ripple-section {
+    position: relative;
+    padding: 120px 24px;
+    background: var(--navy-900);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .ripples-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .ripple-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(34,211,238,0.25);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: rippleExpand 4s ease-out infinite;
+  }
+
+  .ripple-ring:nth-child(1) { width: 200px; height: 200px; animation-delay: 0s; }
+  .ripple-ring:nth-child(2) { width: 360px; height: 360px; animation-delay: 0.8s; }
+  .ripple-ring:nth-child(3) { width: 520px; height: 520px; animation-delay: 1.6s; }
+  .ripple-ring:nth-child(4) { width: 700px; height: 700px; animation-delay: 2.4s; }
+  .ripple-ring:nth-child(5) { width: 900px; height: 900px; animation-delay: 3.2s; }
+
+  @keyframes rippleExpand {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+  }
+
+  .ripple-content {
+    position: relative;
+    z-index: 10;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .ripple-content h2 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.022em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .ripple-content p {
+    font-size: 17px;
+    color: var(--slate-400);
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  /* ===================== PROBLEM SECTION — Scroll animated cards ===================== */
+  .problem-section {
+    padding: 80px 24px;
+    background: var(--navy-800);
+  }
+
+  .problem-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 60px;
+  }
+
+  .problem-header h2 {
+    font-size: clamp(24px, 3.5vw, 40px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .problem-header p {
+    color: var(--slate-400);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .problem-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .problem-card {
+    background: var(--navy-700);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 32px 24px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .problem-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .problem-card:nth-child(2) { transition-delay: 0.12s; }
+  .problem-card:nth-child(3) { transition-delay: 0.24s; }
+
+  .problem-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .problem-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .problem-card p {
+    font-size: 14px;
+    color: var(--slate-400);
+    line-height: 1.6;
+  }
+
+  .problem-resolution {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--cyan-400);
+    font-weight: 500;
+  }
+
+  .resolution-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cyan-400);
+    flex-shrink: 0;
+  }
+
+  /* ===================== SECTION SEPARATOR ===================== */
+  .page-label {
+    padding: 12px 24px;
+    background: rgba(34,211,238,0.05);
+    border-top: 1px solid rgba(34,211,238,0.15);
+    border-bottom: 1px solid rgba(34,211,238,0.15);
+    text-align: center;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--cyan-400);
+    font-weight: 600;
+  }
+
+  /* ===================== PARTNER BEAM SECTION ===================== */
+  .partner-beam-section {
+    padding: 80px 24px;
+    background: var(--navy-900);
+    text-align: center;
+  }
+
+  .beam-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 48px auto;
+    max-width: 700px;
+    position: relative;
+  }
+
+  .beam-node-box {
+    width: 120px;
+    height: 80px;
+    border-radius: 12px;
+    background: var(--navy-800);
+    border: 1px solid rgba(34,211,238,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .beam-node-box.main {
+    width: 140px;
+    height: 100px;
+    border-color: rgba(34,211,238,0.5);
+    box-shadow: 0 0 30px rgba(34,211,238,0.15), 0 0 60px rgba(34,211,238,0.05);
+  }
+
+  .beam-node-icon { font-size: 24px; }
+  .beam-node-label { font-size: 11px; color: var(--slate-400); text-align: center; }
+  .beam-node-sublabel { font-size: 9px; color: var(--cyan-400); }
+
+  .beam-connector {
+    flex: 1;
+    height: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .beam-line {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, rgba(34,211,238,0.1), rgba(34,211,238,0.4), rgba(34,211,238,0.1));
+  }
+
+  .beam-pulse {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan-400), transparent);
+    animation: beamPulseMove 2s ease-in-out infinite;
+  }
+
+  .beam-connector:nth-child(4) .beam-pulse { animation-direction: reverse; }
+
+  @keyframes beamPulseMove {
+    0% { left: -30px; }
+    100% { left: 100%; }
+  }
+
+  /* ===================== AMBER SUPPORT SECTION ===================== */
+  .support-section {
+    padding: 80px 24px;
+    background: var(--navy-800);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .amber-glow {
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .support-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .support-inner h2 {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .support-inner p {
+    color: var(--slate-400);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .amber-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.25);
+    color: var(--amber-500);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .support-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .support-stat {
+    background: var(--navy-700);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .support-stat .number {
+    font-family: 'Courier New', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--amber-500);
+    display: block;
+  }
+
+  .support-stat .label {
+    font-size: 12px;
+    color: var(--slate-500);
+    margin-top: 4px;
+  }
+
+  /* ===================== LEGEND ===================== */
+  .legend {
+    padding: 40px 24px;
+    background: var(--navy-800);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .legend-title {
+    text-align: center;
+    font-size: 14px;
+    color: var(--slate-500);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+
+  .legend-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .legend-item {
+    background: var(--navy-700);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .legend-item-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cyan-400);
+    margin-bottom: 4px;
+  }
+
+  .legend-item-where {
+    font-size: 11px;
+    color: var(--slate-500);
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== PAGE LABEL ======== -->
+<div class="page-label">/ — Home · Proposta visual para a ProDB</div>
+
+<!-- ===================== HERO — ANIMATED BEAM ===================== -->
+<section class="hero">
+  <div class="hero-orb"></div>
+
+  <!-- Beam SVG overlay -->
+  <svg class="beam-svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="beamGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="50%" stop-color="#22D3EE"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </linearGradient>
+      <linearGradient id="beamGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="50%" stop-color="#22D3EE"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </linearGradient>
+    </defs>
+    <!-- beam from top-left node to center -->
+    <path class="beam-path" d="M 200 200 Q 450 250 600 300" stroke="url(#beamGrad1)" stroke-width="1.5"/>
+    <!-- beam from center to right node -->
+    <path class="beam-path" d="M 600 300 Q 750 250 1000 180" stroke="url(#beamGrad1)" stroke-width="1.5"/>
+    <!-- beam from bottom node to center -->
+    <path class="beam-path" d="M 300 480 Q 450 400 600 300" stroke="url(#beamGrad2)" stroke-width="1.5"/>
+  </svg>
+
+  <!-- Floating nodes -->
+  <div class="beam-nodes">
+    <div class="beam-node pulse" style="top:28%;left:14%">🏢</div>
+    <div class="beam-node pulse" style="top:22%;right:15%">🔒</div>
+    <div class="beam-node" style="bottom:22%;left:22%">💾</div>
+    <div class="beam-node" style="bottom:20%;right:18%">☁️</div>
+    <div class="beam-node pulse" style="top:55%;left:8%">📊</div>
+    <div class="beam-node" style="top:50%;right:7%">🛡️</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Desde 2011 · Tier III · 9 Certificações</div>
+    <h1>IT managers de 550 empresas pararam de<br><span>receber fatura em dólar.</span></h1>
+    <p class="hero-sub">Desde 2011, a ProDB hospeda aplicações, bancos de dados e sites de empresas brasileiras que precisam de previsibilidade orçamentária, suporte em português e conformidade auditável.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary">Fale com um especialista</button>
+      <button class="btn-secondary">Teste backup grátis · 15 dias</button>
+    </div>
+    <div class="trust-strip">
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M8 1l1.5 4.5H14l-3.5 2.5 1.5 4.5L8 10l-4 2.5 1.5-4.5L2 5.5h4.5z"/>
+        </svg>
+        ISO 27001 · PCI-DSS
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+          <rect x="2" y="2" width="12" height="12" rx="2"/>
+          <path d="M5 8l2 2 4-4"/>
+        </svg>
+        Datacenter Tier III
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+          <circle cx="8" cy="8" r="6"/>
+          <path d="M8 5v3l2 2"/>
+        </svg>
+        SLA 99,982%
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M8 2C5 2 2 5 2 8s3 6 6 6 6-3 6-6-3-6-6-6z"/>
+          <path d="M5 8h6M8 5v6"/>
+        </svg>
+        Suporte em português
+      </div>
+      <div class="trust-item">
+        <svg class="trust-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z"/>
+        </svg>
+        Custo em real · sem surpresa
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MARQUEE — Logo/Trust strip ===================== -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 27001</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> PCI-DSS</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> Tier III · Uptime Institute</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> TÜV Rheinland</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 20000</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> SOC</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 14001</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 37001</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 50001</div>
+    <!-- duplicated for seamless loop -->
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 27001</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> PCI-DSS</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> Tier III · Uptime Institute</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> TÜV Rheinland</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 20000</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> SOC</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 14001</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 37001</div>
+    <div class="marquee-item"><div class="marquee-icon">✓</div> ISO 50001</div>
+  </div>
+</div>
+
+<!-- ===================== PROBLEMA — Scroll trigger cards ===================== -->
+<section class="problem-section">
+  <div class="problem-header">
+    <p class="section-label">Se você gerencia TI no Brasil</p>
+    <h2>Você já passou por uma dessas situações:</h2>
+    <p>As três maiores dores de IT managers que usam cloud internacional no Brasil.</p>
+  </div>
+  <div class="problem-cards" id="problem-cards">
+    <div class="problem-card">
+      <div class="problem-icon">📈</div>
+      <h3>A fatura mudou. O dólar subiu. O budget foi por água abaixo.</h3>
+      <p>Você fecha o orçamento com cuidado. Depois vem a fatura: câmbio subiu, egress cobrado à parte, custo 15% acima da estimativa.</p>
+      <div class="problem-resolution">
+        <div class="resolution-dot"></div>
+        Contrato em real, fatura previsível
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">⏰</div>
+      <h3>Ticket aberto. Quatro horas de espera. Em inglês.</h3>
+      <p>Seu sistema caiu numa sexta à tarde. A resposta chega genérica, em inglês, pedindo logs que você já enviou.</p>
+      <div class="problem-resolution">
+        <div class="resolution-dot"></div>
+        Suporte em português, resposta em minutos
+      </div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">📋</div>
+      <h3>O auditor pediu laudo. O hyperscaler mandou link genérico.</h3>
+      <p>O modelo de responsabilidade compartilhada cobre tudo, em teoria. Na auditoria, você descobre que falta documentação específica.</p>
+      <div class="problem-resolution">
+        <div class="resolution-dot"></div>
+        9 certificações auditáveis disponíveis
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS — Number Counter ===================== -->
+<section class="stats-section">
+  <p class="section-label">Números que você pode colocar no seu relatório</p>
+  <h2 style="font-size:clamp(24px,3vw,36px);font-weight:700;color:#fff;letter-spacing:-0.02em;">A operação em dados concretos</h2>
+
+  <div class="stats-grid" id="stats-grid">
+    <div class="stat-card">
+      <span class="stat-number counter" data-target="14">14</span>
+      <span style="font-size:13px;color:var(--slate-400);">anos de operação</span>
+      <div class="stat-label">desde 2011</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number counter" data-target="550">550<span class="stat-suffix">+</span></span>
+      <span style="font-size:13px;color:var(--slate-400);">empresas clientes</span>
+      <div class="stat-label">ativas hoje</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number" style="font-size:36px;">99,982<span class="stat-suffix">%</span></span>
+      <span style="font-size:13px;color:var(--slate-400);">disponibilidade</span>
+      <div class="stat-label">SLA Tier III</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number counter" data-target="9">9</span>
+      <span style="font-size:13px;color:var(--slate-400);">certificações</span>
+      <div class="stat-label">internacionais</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PAGE LABEL ======== -->
+<div class="page-label">/empresa — Seção de credibilidade com texto circular</div>
+
+<!-- ===================== CIRCULAR ROTATING TEXT — Empresa ===================== -->
+<section class="circular-section">
+  <div class="circular-badge">
+    <!-- Rotating ring of text -->
+    <svg viewBox="0 0 200 200" width="200" height="200">
+      <defs>
+        <path id="circle-path" d="M 100 100 m -72 0 a 72 72 0 1 1 144 0 a 72 72 0 1 1 -144 0"/>
+      </defs>
+      <g class="circular-ring">
+        <text fill="#22D3EE" font-size="10.5" font-family="system-ui" font-weight="600" letter-spacing="3.5">
+          <textPath href="#circle-path">
+            ISO 27001 · PCI-DSS · TIER III · ISO 20000 · SOC · TÜV ·&nbsp;
+          </textPath>
+        </text>
+      </g>
+      <!-- Inner circle decorative -->
+      <circle cx="100" cy="100" r="56" fill="none" stroke="rgba(34,211,238,0.08)" stroke-width="1"/>
+      <circle cx="100" cy="100" r="40" fill="rgba(14,27,51,0.9)" stroke="rgba(34,211,238,0.2)" stroke-width="1"/>
+    </svg>
+    <div class="circular-center">
+      <span class="circular-center-text">fundada em</span>
+      <span class="circular-center-year">2011</span>
+    </div>
+  </div>
+
+  <div class="circular-content">
+    <p class="section-label">Empresa</p>
+    <h2>A empresa que o seu auditor pode visitar, inspecionar e certificar.</h2>
+    <p>Fundada em 2011 em Campinas/SP, a ProDB é uma provedora brasileira de cloud e backup com datacenter Tier III, nove certificações internacionais e suporte em português.</p>
+    <div class="cert-chips">
+      <span class="cert-chip">ISO 27001</span>
+      <span class="cert-chip">PCI-DSS</span>
+      <span class="cert-chip">Tier III</span>
+      <span class="cert-chip">TÜV Rheinland</span>
+      <span class="cert-chip">ISO 20000</span>
+      <span class="cert-chip">SOC</span>
+      <span class="cert-chip">ISO 14001</span>
+      <span class="cert-chip">ISO 37001</span>
+      <span class="cert-chip">ISO 50001</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PAGE LABEL ======== -->
+<div class="page-label">/servidores-cloud — Infraestrutura com grade Synthwave</div>
+
+<!-- ===================== SYNTHWAVE GRID — Infra/Cloud ===================== -->
+<section class="synthwave-section">
+  <!-- Synthwave grid background -->
+  <div class="synthwave-grid">
+    <div class="scanlines"></div>
+    <svg class="grid-svg" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="gridFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="60%" stop-color="rgba(34,211,238,0.15)"/>
+          <stop offset="100%" stop-color="rgba(34,211,238,0.35)"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+      </defs>
+      <!-- Perspective horizontal lines -->
+      <g filter="url(#glow)" stroke="url(#gridFade)" stroke-width="0.6" fill="none">
+        <line x1="0" y1="500" x2="1200" y2="360"/>
+        <line x1="0" y1="500" x2="1200" y2="340"/>
+        <line x1="0" y1="500" x2="1200" y2="318"/>
+        <line x1="0" y1="500" x2="1200" y2="295"/>
+        <line x1="0" y1="500" x2="1200" y2="270"/>
+        <line x1="0" y1="500" x2="1200" y2="242"/>
+        <line x1="0" y1="500" x2="1200" y2="210"/>
+        <line x1="0" y1="500" x2="1200" y2="174"/>
+        <line x1="0" y1="500" x2="1200" y2="130"/>
+        <line x1="0" y1="500" x2="1200" y2="78"/>
+      </g>
+      <!-- Perspective vertical lines converging to vanishing point at (600,80) -->
+      <g filter="url(#glow)" stroke="url(#gridFade)" stroke-width="0.6" fill="none">
+        <line x1="600" y1="80" x2="0" y2="500"/>
+        <line x1="600" y1="80" x2="100" y2="500"/>
+        <line x1="600" y1="80" x2="200" y2="500"/>
+        <line x1="600" y1="80" x2="300" y2="500"/>
+        <line x1="600" y1="80" x2="400" y2="500"/>
+        <line x1="600" y1="80" x2="500" y2="500"/>
+        <line x1="600" y1="80" x2="600" y2="500"/>
+        <line x1="600" y1="80" x2="700" y2="500"/>
+        <line x1="600" y1="80" x2="800" y2="500"/>
+        <line x1="600" y1="80" x2="900" y2="500"/>
+        <line x1="600" y1="80" x2="1000" y2="500"/>
+        <line x1="600" y1="80" x2="1100" y2="500"/>
+        <line x1="600" y1="80" x2="1200" y2="500"/>
+      </g>
+    </svg>
+    <div class="horizon-glow"></div>
+    <!-- Particles -->
+    <div class="particles">
+      <div class="particle" style="left:15%;top:70%;--dur:5s;--delay:0s;width:3px;height:3px;"></div>
+      <div class="particle" style="left:30%;top:80%;--dur:6s;--delay:1s;"></div>
+      <div class="particle" style="left:45%;top:75%;--dur:4s;--delay:2s;width:3px;height:3px;"></div>
+      <div class="particle" style="left:60%;top:85%;--dur:7s;--delay:0.5s;"></div>
+      <div class="particle" style="left:72%;top:72%;--dur:5s;--delay:1.5s;width:3px;height:3px;"></div>
+      <div class="particle" style="left:85%;top:78%;--dur:6s;--delay:3s;"></div>
+      <div class="particle" style="left:20%;top:60%;--dur:4.5s;--delay:2.5s;width:2px;height:2px;background:var(--amber-500);"></div>
+      <div class="particle" style="left:55%;top:65%;--dur:5.5s;--delay:0.8s;width:2px;height:2px;background:var(--amber-500);"></div>
+      <div class="particle" style="left:78%;top:60%;--dur:6s;--delay:3.5s;width:2px;height:2px;background:var(--amber-500);"></div>
+    </div>
+  </div>
+
+  <div class="synthwave-content">
+    <p class="section-label">Servidores Cloud</p>
+    <h2>Servidor cloud com fatura previsível em real.<br><span class="glow-text">Suporte em português. SLA de 99,982%.</span></h2>
+    <p>Hospede aplicações, bancos de dados e sites em infraestrutura dedicada com datacenter Tier III certificado. Sem surprise billing. Sem ticket em inglês.</p>
+    <button class="btn-primary">Fale com um especialista</button>
+
+    <div class="infra-cards">
+      <div class="infra-card">
+        <div class="infra-card-icon">⚡</div>
+        <h4>NVMe All-Flash</h4>
+        <div class="metric">&lt;0,5ms</div>
+        <p>latência de storage</p>
+      </div>
+      <div class="infra-card">
+        <div class="infra-card-icon">🔒</div>
+        <h4>Datacenter Tier III</h4>
+        <div class="metric">99,982%</div>
+        <p>disponibilidade anual</p>
+      </div>
+      <div class="infra-card">
+        <div class="infra-card-icon">🌐</div>
+        <h4>Rede SDN</h4>
+        <div class="metric">25-100 Gbps</div>
+        <p>spine-leaf redundante</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PAGE LABEL ======== -->
+<div class="page-label">/backup — Background Ripple</div>
+
+<!-- ===================== RIPPLE — Backup CTA ===================== -->
+<section class="ripple-section">
+  <div class="ripples-container">
+    <div class="ripple-ring"></div>
+    <div class="ripple-ring"></div>
+    <div class="ripple-ring"></div>
+    <div class="ripple-ring"></div>
+    <div class="ripple-ring"></div>
+  </div>
+
+  <div class="ripple-content">
+    <p class="section-label">Backup ProDB</p>
+    <h2>Quando foi a última vez que você testou a restauração do seu backup?</h2>
+    <p>A ProDB oferece backup diário automático com restauração assistida, suporte em português e planos escaláveis a partir de 1 TB. Teste grátis por 15 dias, sem cartão de crédito.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary">Começar teste grátis</button>
+      <button class="btn-secondary">Ver planos</button>
+    </div>
+    <div style="margin-top:24px;font-size:12px;color:var(--slate-500);">
+      Sem cartão de crédito &nbsp;·&nbsp; Cancele quando quiser &nbsp;·&nbsp; Suporte em português
+    </div>
+  </div>
+</section>
+
+<!-- ======== PAGE LABEL ======== -->
+<div class="page-label">/seja-um-parceiro — Animated beam conectando parceiro → ProDB → cliente</div>
+
+<!-- ===================== PARTNER BEAM DIAGRAM ===================== -->
+<section class="partner-beam-section">
+  <p class="section-label">Programa de Parceiros</p>
+  <h2 style="font-size:clamp(24px,3.5vw,40px);font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:12px;">Você já vende soluções de TI.<br>Comece a ganhar comissão recorrente também.</h2>
+  <p style="color:var(--slate-400);font-size:16px;max-width:520px;margin:0 auto;">Para consultores, integradores e revendedores que querem adicionar cloud e backup ao portfólio sem investir em infraestrutura própria.</p>
+
+  <!-- Beam diagram: Partner → ProDB → Client -->
+  <div class="beam-diagram">
+    <div class="beam-node-box">
+      <div class="beam-node-icon">🤝</div>
+      <div class="beam-node-label">Parceiro</div>
+      <div class="beam-node-sublabel">consultor · MSP · integrador</div>
+    </div>
+
+    <div class="beam-connector">
+      <div class="beam-line"></div>
+      <div class="beam-pulse"></div>
+    </div>
+
+    <div class="beam-node-box main">
+      <div class="beam-node-icon">☁️</div>
+      <div class="beam-node-label">ProDB</div>
+      <div class="beam-node-sublabel">infraestrutura + suporte</div>
+    </div>
+
+    <div class="beam-connector">
+      <div class="beam-line"></div>
+      <div class="beam-pulse"></div>
+    </div>
+
+    <div class="beam-node-box">
+      <div class="beam-node-icon">🏢</div>
+      <div class="beam-node-label">Cliente final</div>
+      <div class="beam-node-sublabel">empresa brasileira</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-top:48px;">
+    <div style="text-align:center;">
+      <div style="font-size:36px;font-weight:700;color:var(--cyan-400);font-family:'Courier New',monospace;">30%</div>
+      <div style="font-size:12px;color:var(--slate-500);margin-top:4px;">margem recorrente</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:36px;font-weight:700;color:var(--cyan-400);font-family:'Courier New',monospace;">R$ 0</div>
+      <div style="font-size:12px;color:var(--slate-500);margin-top:4px;">taxa de adesão</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:36px;font-weight:700;color:var(--cyan-400);font-family:'Courier New',monospace;">2h</div>
+      <div style="font-size:12px;color:var(--slate-500);margin-top:4px;">resposta a oportunidades</div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <button class="btn-primary">Quero ser um parceiro</button>
+  </div>
+</section>
+
+<!-- ===================== AMBER SUPPORT ===================== -->
+<section class="support-section">
+  <div class="amber-glow"></div>
+  <div class="support-inner">
+    <div>
+      <div class="amber-badge">
+        <span>●</span> Suporte humano 24/7
+      </div>
+      <h2 style="margin-top:16px;">Quem atende quando algo dá errado</h2>
+      <p>Quando você abre um chamado, alguém da equipe técnica ProDB atende. Em português. Com acesso ao ambiente. Sem roteamento para terceiros.</p>
+      <button class="btn-primary" style="background:var(--amber-500);">Fale com um especialista</button>
+    </div>
+    <div class="support-stats">
+      <div class="support-stat">
+        <span class="number">&lt;15min</span>
+        <div class="label">resposta em incidentes críticos</div>
+      </div>
+      <div class="support-stat">
+        <span class="number">24/7</span>
+        <div class="label">monitoramento proativo NOC</div>
+      </div>
+      <div class="support-stat">
+        <span class="number">pt-BR</span>
+        <div class="label">suporte sempre em português</div>
+      </div>
+      <div class="support-stat">
+        <span class="number">0</span>
+        <div class="label">tickets em inglês necessários</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LEGEND ===================== -->
+<div class="legend">
+  <div class="legend-title">Resumo dos elementos visuais · onde cada um aparece</div>
+  <div class="legend-grid">
+    <div class="legend-item">
+      <div class="legend-item-name">Animated Beam</div>
+      <div class="legend-item-where">Hero (home) e diagrama do programa de parceiros</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-item-name">Marquee</div>
+      <div class="legend-item-where">Strip de certificações abaixo do hero (todas as páginas)</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-item-name">Number Counter</div>
+      <div class="legend-item-where">Seção de stats na home e página empresa</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-item-name">Texto circular girando</div>
+      <div class="legend-item-where">Hero da página Empresa, decorativo com certificações</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-item-name">Synthwave Grid + Particles</div>
+      <div class="legend-item-where">Hero da página Servidores Cloud e seção de infra</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-item-name">Ripple Background</div>
+      <div class="legend-item-where">CTA final da página Backup (sensação de proteção)</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-item-name">Scroll-trigger fade-up</div>
+      <div class="legend-item-where">Cards de problema, features, pilares — todas as páginas</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-item-name">Amber accent</div>
+      <div class="legend-item-where">Seção de suporte (momento humano) em todas as páginas</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Scroll-trigger for problem cards
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.problem-card').forEach(card => {
+        card.classList.add('visible');
+      });
+    }
+  });
+}, { threshold: 0.2 });
+
+const problemCards = document.getElementById('problem-cards');
+if (problemCards) observer.observe(problemCards);
+
+// Number counter animation
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('[data-target]').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const step = target / 60;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          el.firstChild.textContent = Math.floor(current);
+        }, 16);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+const statsGrid = document.getElementById('stats-grid');
+if (statsGrid) counterObserver.observe(statsGrid);
+</script>
+
+</body>
+</html>

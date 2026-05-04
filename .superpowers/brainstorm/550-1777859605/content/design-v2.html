@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProDB — Design System v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+/* ─── TOKENS ─────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:            #060C18;
+  --bg-surface:    #0B1828;
+  --bg-card:       #0F2035;
+  --bg-card-hover: #132540;
+
+  /* Text */
+  --text-1: #ECF0F6;
+  --text-2: #7A93B4;
+  --text-3: #445E7A;
+  --text-inv: #060C18;
+
+  /* Accents */
+  --cyan:    #22D3EE;
+  --cyan-dim: rgba(34,211,238,0.12);
+  --cyan-border: rgba(34,211,238,0.18);
+  --amber:   #F59E0B;
+  --amber-dim: rgba(245,158,11,0.10);
+
+  /* Borders */
+  --border:   rgba(255,255,255,0.07);
+  --border-2: rgba(255,255,255,0.11);
+
+  /* Fonts */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'Courier New', monospace;
+
+  /* Spacing scale (8px base) */
+  --s1: 8px;  --s2: 16px;  --s3: 24px;  --s4: 32px;
+  --s5: 48px; --s6: 64px;  --s7: 96px;  --s8: 128px;
+
+  /* Radius */
+  --r-sm: 6px;  --r-md: 10px;  --r-lg: 16px;  --r-xl: 24px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── TYPOGRAPHY SCALE ───────────────────── */
+.t-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  opacity: 0.9;
+}
+
+.t-display {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--text-1);
+}
+
+.t-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+}
+
+.t-h3 {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--text-1);
+}
+
+.t-body-lg {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+.t-body {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+/* ─── LAYOUT UTILITIES ──────────────────── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--s4);
+}
+
+.container-sm { max-width: 760px; margin: 0 auto; padding: 0 var(--s4); }
+.container-lg { max-width: 1400px; margin: 0 auto; padding: 0 var(--s4); }
+
+/* ─── BUTTONS ───────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--cyan);
+  color: var(--text-inv);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: #1fc8e0;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(34,211,238,0.2);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--border-2);
+}
+
+.btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text-1); }
+
+/* ─── PAGE SEPARATOR ────────────────────── */
+.page-sep {
+  padding: 10px var(--s4);
+  background: rgba(34,211,238,0.04);
+  border-top: 1px solid rgba(34,211,238,0.12);
+  border-bottom: 1px solid rgba(34,211,238,0.12);
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 1: HERO
+═══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--s8) 0 var(--s7);
+}
+
+/* Mesh gradient background — 3 cores */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 20%, rgba(15,24,80,0.55) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(6,22,36,0.60) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(8,20,44,0.30) 0%, transparent 70%),
+    var(--bg);
+  pointer-events: none;
+}
+
+/* Subtle noise texture */
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+}
+
+/* Grid overlay — very subtle */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
+}
+
+/* Animated beam SVG */
+.hero-beams {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+@keyframes beam-travel {
+  0%   { stroke-dashoffset: 600; opacity: 0; }
+  8%   { opacity: 0.7; }
+  80%  { opacity: 0.7; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.beam {
+  stroke-dasharray: 60 540;
+  fill: none;
+  stroke-width: 1;
+  animation: beam-travel 5s cubic-bezier(0.16,1,0.3,1) infinite;
+}
+.beam:nth-child(1) { animation-delay: 0s;   stroke: var(--cyan); opacity: 0.5; }
+.beam:nth-child(2) { animation-delay: 1.8s; stroke: var(--cyan); opacity: 0.35; }
+.beam:nth-child(3) { animation-delay: 3.5s; stroke: rgba(34,211,238,0.4); }
+
+/* Floating node dots */
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,211,238,0.4), 0 0 0 0 rgba(34,211,238,0.2); }
+  50%       { box-shadow: 0 0 0 4px rgba(34,211,238,0.15), 0 0 0 8px rgba(34,211,238,0.05); }
+}
+
+.node {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: node-pulse 3s ease-in-out infinite;
+}
+.node::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(34,211,238,0.25);
+}
+.node:nth-child(1) { top: 28%; left: 12%; animation-delay: 0s; }
+.node:nth-child(2) { top: 18%; right: 16%; animation-delay: 1.2s; }
+.node:nth-child(3) { top: 62%; left: 8%; animation-delay: 2.1s; opacity: 0.6; }
+.node:nth-child(4) { bottom: 25%; right: 12%; animation-delay: 0.8s; opacity: 0.7; }
+.node:nth-child(5) { top: 50%; right: 6%; animation-delay: 1.6s; opacity: 0.5; }
+
+/* Hero inner */
+.hero-inner {
+  position: relative;
+  z-index: 10;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(34,211,238,0.07);
+  border: 1px solid rgba(34,211,238,0.2);
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--s4);
+}
+
+.hero-badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: blink 2.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(46px, 6.5vw, 84px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  color: var(--text-1);
+  max-width: 840px;
+  margin-bottom: var(--s3);
+}
+
+/* Gradient text for key phrase */
+.hero-headline .accent {
+  background: linear-gradient(135deg, #22D3EE 0%, #67E8F9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text-2);
+  max-width: 580px;
+  margin-bottom: var(--s5);
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  margin-bottom: var(--s7);
+}
+
+/* Trust strip */
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-wrap: wrap;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--border);
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+.trust-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--text-3);
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 2: MARQUEE
+═══════════════════════════════════════════ */
+.marquee-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+  overflow: hidden;
+  padding: 18px 0;
+  position: relative;
+}
+
+/* Fade edges */
+.marquee-wrap::before,
+.marquee-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg-surface), transparent); }
+.marquee-wrap::after  { right: 0; background: linear-gradient(-90deg, var(--bg-surface), transparent); }
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 var(--s4);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.marquee-check {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--cyan);
+  opacity: 0.7;
+}
+
+.marquee-sep {
+  width: 1px;
+  height: 14px;
+  background: var(--border-2);
+  margin: 0 8px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 3: PROBLEMS
+═══════════════════════════════════════════ */
+.problems {
+  padding: var(--s8) 0;
+}
+
+.section-header {
+  margin-bottom: var(--s6);
+}
+
+.section-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s4);
+  flex-wrap: wrap;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  margin-top: var(--s6);
+}
+
+.problem-card {
+  background: var(--bg-surface);
+  padding: var(--s5) var(--s4);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.problem-card.visible { opacity: 1; transform: none; }
+.problem-card:nth-child(2) { transition-delay: 0.1s; }
+.problem-card:nth-child(3) { transition-delay: 0.2s; }
+
+/* Number indicator */
+.p-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(255,255,255,0.04);
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-sm);
+  background: var(--amber-dim);
+  border: 1px solid rgba(245,158,11,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--s3);
+}
+
+.p-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--amber);
+}
+
+.p-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.25;
+  margin-bottom: var(--s2);
+  letter-spacing: -0.01em;
+}
+
+.p-body { font-size: 14px; line-height: 1.6; color: var(--text-2); }
+
+.p-resolution {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--cyan);
+  font-weight: 500;
+}
+
+.p-res-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cyan);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 4: STATS — Number Counter
+═══════════════════════════════════════════ */
+.stats {
+  padding: var(--s8) 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.stat-item {
+  padding: var(--s5) var(--s5);
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.stat-item:last-child { border-right: none; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text-1);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.stat-num .unit {
+  font-size: 0.55em;
+  color: var(--cyan);
+  letter-spacing: 0;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-3);
+  font-weight: 400;
+  display: block;
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 5: EMPRESA — Circular text
+═══════════════════════════════════════════ */
+.empresa {
+  padding: var(--s8) 0;
+}
+
+.empresa-inner {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--s7);
+  align-items: center;
+}
+
+.circular-wrap {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  flex-shrink: 0;
+}
+
+.circ-ring { animation: spin 18s linear infinite; transform-origin: center; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.circ-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--cyan-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(34,211,238,0.08);
+}
+
+.circ-year {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-1);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.circ-sub {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 3px;
+}
+
+.empresa-content { max-width: 600px; }
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: var(--s4);
+}
+
+.chip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--cyan-border);
+  background: var(--cyan-dim);
+  font-size: 11px;
+  color: var(--cyan);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 6: SYNTHWAVE — Cloud
+═══════════════════════════════════════════ */
+.cloud-section {
+  position: relative;
+  padding: var(--s8) 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Rich mesh gradient — 3 dark colors */
+.cloud-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 100%, rgba(34,211,238,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 60% at 80% 50%, rgba(8,20,60,0.70) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(5,18,35,0.60) 0%, transparent 55%),
+    var(--bg);
+  pointer-events: none;
+}
+
+/* Synthwave grid — perspective */
+.synth-grid {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 55%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Horizon glow */
+.synth-horizon {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,211,238,0.35) 30%, rgba(34,211,238,0.5) 50%, rgba(34,211,238,0.35) 70%, transparent);
+  box-shadow: 0 0 40px 4px rgba(34,211,238,0.15);
+}
+
+/* Particles */
+@keyframes float-up {
+  0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+  15%  { opacity: 0.9; transform: translateY(-15px) scale(1); }
+  85%  { opacity: 0.9; transform: translateY(-55px) scale(1); }
+  100% { opacity: 0; transform: translateY(-70px) scale(0.5); }
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: float-up var(--d, 5s) ease-in-out infinite var(--delay, 0s);
+}
+
+.cloud-inner {
+  position: relative;
+  z-index: 10;
+}
+
+/* Feature bento grid */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 10px;
+  margin-top: var(--s6);
+}
+
+.bento-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s4);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.bento-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan-border), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.bento-card:hover { border-color: var(--cyan-border); box-shadow: 0 0 32px rgba(34,211,238,0.06); }
+.bento-card:hover::after { opacity: 1; }
+
+.bento-card.wide { grid-column: span 2; }
+.bento-card.tall { grid-row: span 2; }
+
+.bento-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--cyan-dim);
+  border: 1px solid var(--cyan-border);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: var(--s2);
+}
+
+.bento-metric {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 800;
+  color: var(--text-1);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 4px;
+}
+
+.bento-metric .unit { font-size: 0.5em; color: var(--cyan); }
+
+.bento-label {
+  font-size: 12px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.bento-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+
+.bento-body { font-size: 13.5px; color: var(--text-2); line-height: 1.55; }
+
+/* ═══════════════════════════════════════════
+   SECTION 7: BACKUP — Ripple
+═══════════════════════════════════════════ */
+.backup {
+  padding: var(--s8) 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Rich mesh bg */
+.backup-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 70% at 50% 50%, rgba(34,211,238,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 40% at 10% 80%, rgba(5,14,30,0.8) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(10,18,50,0.5) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.ripples {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: 0.6; }
+  100% { transform: translate(-50%,-50%) scale(1); opacity: 0; }
+}
+
+.ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(34,211,238,0.18);
+  top: 0; left: 0;
+  transform: translate(-50%,-50%) scale(0);
+  animation: ripple 5s ease-out infinite;
+}
+
+.backup-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s7);
+  align-items: center;
+}
+
+.backup-question {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  color: var(--text-1);
+  margin-bottom: var(--s3);
+}
+
+/* Plan card */
+.plan-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+
+.plan-top {
+  height: 3px;
+  background: linear-gradient(90deg, var(--cyan), #67E8F9);
+}
+
+.plan-body { padding: var(--s4) var(--s4); }
+
+.plan-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: var(--s3);
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: var(--s3);
+}
+
+.plan-price-val {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--text-1);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.plan-price-detail { font-size: 14px; color: var(--text-3); }
+
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: var(--s4); }
+
+.plan-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.plan-check {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(34,211,238,0.1);
+  border: 1px solid rgba(34,211,238,0.25);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 9px;
+  color: var(--cyan);
+}
+
+.trial-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  background: var(--amber-dim);
+  border: 1px solid rgba(245,158,11,0.18);
+  font-size: 12.5px;
+  color: var(--amber);
+  font-weight: 500;
+  margin-top: var(--s3);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 8: PARTNER BEAM
+═══════════════════════════════════════════ */
+.partner {
+  padding: var(--s8) 0;
+  background: var(--bg);
+}
+
+.partner-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s7);
+  align-items: center;
+}
+
+.beam-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: stretch;
+}
+
+.beam-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.beam-box.center-box {
+  border-color: var(--cyan-border);
+  background: linear-gradient(135deg, var(--bg-card), rgba(34,211,238,0.04));
+  box-shadow: 0 0 24px rgba(34,211,238,0.07);
+}
+
+.beam-box-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--r-md);
+  background: var(--cyan-dim);
+  border: 1px solid var(--cyan-border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.beam-box-label { font-size: 13px; font-weight: 600; color: var(--text-1); }
+.beam-box-sub   { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+/* Connector with pulse */
+.beam-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 40px;
+  position: relative;
+  margin: 0 20px;
+}
+
+.beam-line-v {
+  width: 1px;
+  flex: 1;
+  background: linear-gradient(180deg, var(--border-2), var(--border), var(--border-2));
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes pulse-down {
+  0%   { top: -8px; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.beam-pulse {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pulse-down 2s ease-in-out infinite;
+}
+
+.beam-connector:nth-child(4) .beam-pulse { animation-delay: 1s; }
+
+/* Partner stats */
+.p-stats-row {
+  display: flex;
+  gap: var(--s4);
+  margin-top: var(--s5);
+  flex-wrap: wrap;
+}
+
+.p-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.p-stat-val {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-1);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.p-stat-val .u { font-size: 0.6em; color: var(--cyan); }
+
+.p-stat-label { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ═══════════════════════════════════════════
+   SECTION 9: SUPPORT — Amber Moment
+═══════════════════════════════════════════ */
+.support {
+  padding: var(--s8) 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.support-amber-orb {
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.support-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s7);
+  align-items: center;
+}
+
+.support-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ss-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s4) var(--s3);
+}
+
+.ss-val {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--amber);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 5px;
+}
+
+.ss-label { font-size: 11.5px; color: var(--text-3); line-height: 1.4; }
+
+.amber-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--amber-dim);
+  border: 1px solid rgba(245,158,11,0.2);
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: var(--s3);
+}
+
+.amber-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--amber);
+  animation: blink 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════
+   LEGEND
+═══════════════════════════════════════════ */
+.legend-section {
+  padding: var(--s6) 0;
+  border-top: 1px solid var(--border);
+}
+
+.legend-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+  margin-bottom: var(--s4);
+  font-weight: 500;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.legend-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s2) var(--s3);
+}
+
+.legend-name { font-size: 13px; font-weight: 600; color: var(--cyan); margin-bottom: 3px; }
+.legend-where { font-size: 11.5px; color: var(--text-3); line-height: 1.45; }
+
+/* ─── HELPERS ───── */
+.mb-1 { margin-bottom: var(--s1); }
+.mb-2 { margin-bottom: var(--s2); }
+.mb-3 { margin-bottom: var(--s3); }
+.mb-4 { margin-bottom: var(--s4); }
+.mb-5 { margin-bottom: var(--s5); }
+
+svg.icon {
+  width: 18px; height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+svg.icon.sm { width: 14px; height: 14px; }
+svg.icon.lg { width: 22px; height: 22px; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════ HERO ════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-grid"></div>
+
+  <!-- Floating nodes -->
+  <div class="hero-beams">
+    <div class="node"></div>
+    <div class="node"></div>
+    <div class="node"></div>
+    <div class="node"></div>
+    <div class="node"></div>
+    <svg viewBox="0 0 1400 700" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style="position:absolute;top:0;left:0;pointer-events:none;">
+      <defs>
+        <linearGradient id="b1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="40%" stop-color="#22D3EE" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </linearGradient>
+        <linearGradient id="b2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="50%" stop-color="#22D3EE" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </linearGradient>
+      </defs>
+      <path class="beam" d="M 160 196 C 400 260, 600 280, 700 350" stroke="url(#b1)"/>
+      <path class="beam" d="M 1230 126 C 1000 200, 800 280, 700 350" stroke="url(#b1)"/>
+      <path class="beam" d="M 200 490 C 400 430, 580 380, 700 350" stroke="url(#b2)"/>
+    </svg>
+  </div>
+
+  <div class="hero-inner container">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Fundada em 2011 &nbsp;·&nbsp; Tier III &nbsp;·&nbsp; 9 Certificações Internacionais
+    </div>
+
+    <h1 class="hero-headline">
+      IT managers de 550 empresas<br>
+      pararam de receber<br>
+      <span class="accent">fatura em dólar.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Desde 2011, a ProDB hospeda aplicações, bancos de dados e sites de empresas brasileiras que precisam de previsibilidade orçamentária, suporte em português e conformidade auditável.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary">Fale com um especialista</a>
+      <a href="#" class="btn btn-ghost">Teste backup grátis · 15 dias</a>
+    </div>
+
+    <div class="hero-trust">
+      <span class="trust-item">
+        <svg class="icon sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        ISO 27001 · PCI-DSS
+      </span>
+      <div class="trust-dot"></div>
+      <span class="trust-item">
+        <svg class="icon sm" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 12l4 4 6-6"/></svg>
+        Datacenter Tier III · Ascenty
+      </span>
+      <div class="trust-dot"></div>
+      <span class="trust-item">
+        <svg class="icon sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        SLA 99,982% garantido em contrato
+      </span>
+      <div class="trust-dot"></div>
+      <span class="trust-item">
+        <svg class="icon sm" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Suporte humano em português
+      </span>
+      <div class="trust-dot"></div>
+      <span class="trust-item">
+        <svg class="icon sm" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Custo fixo em real · sem variação cambial
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ MARQUEE ════════════════════════════════ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <!-- 1× -->
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 27001</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>PCI-DSS</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Tier III · Uptime Institute</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>TÜV Rheinland</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 20000</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>SOC</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 14001</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 37001</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 50001</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Dell Technologies</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Ascenty Partner</div><div class="marquee-sep"></div>
+    <!-- 2× duplicate for seamless loop -->
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 27001</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>PCI-DSS</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Tier III · Uptime Institute</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>TÜV Rheinland</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 20000</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>SOC</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 14001</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 37001</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>ISO 50001</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Dell Technologies</div><div class="marquee-sep"></div>
+    <div class="marquee-item"><svg class="marquee-check icon sm" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Ascenty Partner</div><div class="marquee-sep"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ PROBLEMA ════════════════════════════════ -->
+<section class="problems">
+  <div class="container">
+    <div class="section-row section-header">
+      <div>
+        <p class="t-label mb-2">Se você gerencia TI no Brasil</p>
+        <h2 class="t-h2">Você já passou por uma<br>dessas situações:</h2>
+      </div>
+      <p class="t-body-lg" style="max-width:380px;padding-bottom:4px;">As três maiores dores de IT managers que usam cloud internacional no Brasil.</p>
+    </div>
+
+    <div class="problem-grid" id="problem-grid">
+      <!-- Card 1 -->
+      <div class="problem-card">
+        <span class="p-num">01</span>
+        <div class="p-icon-wrap">
+          <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+            <polyline points="16 7 22 7 22 13"/>
+          </svg>
+        </div>
+        <div class="p-title">A fatura mudou. O dólar subiu. O budget foi por água abaixo.</div>
+        <p class="p-body">Você fecha o orçamento com cuidado. Depois vem a fatura: câmbio subiu, egress cobrado à parte, custo 15% acima da estimativa. Você passa a semana explicando ao financeiro.</p>
+        <div class="p-resolution">
+          <div class="p-res-dot"></div>
+          Contrato em real, fatura sem surpresa
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="problem-card">
+        <span class="p-num">02</span>
+        <div class="p-icon-wrap">
+          <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="p-title">Ticket aberto. Quatro horas de espera. Em inglês.</div>
+        <p class="p-body">Seu sistema caiu numa sexta à tarde. A resposta chega genérica, em inglês, pedindo logs que você já enviou. A equipe para. O cliente reclama. Você resolve sozinho de qualquer jeito.</p>
+        <div class="p-resolution">
+          <div class="p-res-dot"></div>
+          Suporte humano em português, minutos
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="problem-card">
+        <span class="p-num">03</span>
+        <div class="p-icon-wrap">
+          <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <div class="p-title">O auditor pediu laudo. O hyperscaler mandou link genérico.</div>
+        <p class="p-body">O modelo de responsabilidade compartilhada cobre tudo, em teoria. Na auditoria de LGPD ou PCI-DSS, você descobre que precisa de documentação que não vem pronta.</p>
+        <div class="p-resolution">
+          <div class="p-res-dot"></div>
+          9 certificações auditáveis, documentadas
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ STATS ════════════════════════════════ -->
+<section class="stats">
+  <div class="container-lg">
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-item">
+        <span class="stat-num"><span class="count" data-to="14">14</span><span class="unit">+</span></span>
+        <span style="font-size:14px;color:var(--text-2);">anos de operação</span>
+        <span class="stat-label">desde 2011 · Campinas, SP</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num"><span class="count" data-to="550">550</span><span class="unit">+</span></span>
+        <span style="font-size:14px;color:var(--text-2);">empresas clientes</span>
+        <span class="stat-label">ativas · todos os portes</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">99<span class="unit">,982%</span></span>
+        <span style="font-size:14px;color:var(--text-2);">disponibilidade</span>
+        <span class="stat-label">SLA Tier III · Uptime Institute</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num"><span class="count" data-to="9">9</span></span>
+        <span style="font-size:14px;color:var(--text-2);">certificações</span>
+        <span class="stat-label">ISO 27001 · PCI-DSS · SOC · +6</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ PAGE SEP ════════════════ -->
+<div class="page-sep"><span class="t-label">/empresa — seção de credibilidade com texto circular</span></div>
+
+<!-- ════════════════════════════════ EMPRESA ════════════════════════════════ -->
+<section class="empresa">
+  <div class="container">
+    <div class="empresa-inner">
+      <!-- Circular badge -->
+      <div class="circular-wrap">
+        <svg viewBox="0 0 240 240" width="240" height="240">
+          <defs>
+            <path id="cpath" d="M 120 120 m -86,0 a 86,86 0 1,1 172,0 a 86,86 0 1,1 -172,0"/>
+          </defs>
+          <circle cx="120" cy="120" r="86" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <circle cx="120" cy="120" r="66" fill="none" stroke="var(--border)" stroke-width="1"/>
+          <g class="circ-ring">
+            <text fill="rgba(34,211,238,0.55)" font-size="10" font-family="DM Sans, sans-serif" font-weight="500" letter-spacing="4">
+              <textPath href="#cpath">
+                ISO 27001 · PCI-DSS · TIER III · ISO 20000 · SOC · TÜV · ISO 14001 ·&nbsp;
+              </textPath>
+            </text>
+          </g>
+          <!-- Dots on the ring -->
+          <circle cx="120" cy="34" r="2" fill="var(--cyan)" opacity="0.6"/>
+          <circle cx="206" cy="120" r="2" fill="var(--cyan)" opacity="0.4"/>
+          <circle cx="120" cy="206" r="2" fill="var(--cyan)" opacity="0.5"/>
+          <circle cx="34" cy="120" r="2" fill="var(--cyan)" opacity="0.3"/>
+        </svg>
+        <div class="circ-center">
+          <span class="circ-year">2011</span>
+          <span class="circ-sub">fundada</span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="empresa-content">
+        <p class="t-label mb-3">Empresa</p>
+        <h2 class="t-h2 mb-3">A empresa que o seu auditor pode visitar, inspecionar e certificar.</h2>
+        <p class="t-body-lg mb-4">Fundada em Campinas/SP, a ProDB é uma provedora brasileira de cloud e backup com datacenter Tier III, nove certificações internacionais e suporte em português.</p>
+        <p class="t-body mb-4">Não terceirizamos o suporte. Não repassamos chamados para um call center genérico. A equipe que atende o seu ticket é a mesma que opera a infraestrutura.</p>
+        <div class="chip-row">
+          <span class="chip">ISO 27001</span>
+          <span class="chip">PCI-DSS</span>
+          <span class="chip">Tier III</span>
+          <span class="chip">TÜV Rheinland</span>
+          <span class="chip">ISO 20000</span>
+          <span class="chip">SOC</span>
+          <span class="chip">ISO 14001</span>
+          <span class="chip">ISO 37001</span>
+          <span class="chip">ISO 50001</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ PAGE SEP ════════════════ -->
+<div class="page-sep"><span class="t-label">/servidores-cloud — hero com mesh gradient + synthwave grid + bento</span></div>
+
+<!-- ════════════════════════════════ CLOUD ════════════════════════════════ -->
+<section class="cloud-section">
+  <div class="cloud-bg"></div>
+
+  <!-- Synthwave grid SVG -->
+  <div class="synth-grid">
+    <svg viewBox="0 0 1400 400" preserveAspectRatio="xMidYMax slice" width="100%" height="100%"
+         style="position:absolute;bottom:0;left:0;">
+      <defs>
+        <linearGradient id="gfade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="transparent"/>
+          <stop offset="50%" stop-color="rgba(34,211,238,0.10)"/>
+          <stop offset="100%" stop-color="rgba(34,211,238,0.22)"/>
+        </linearGradient>
+        <filter id="glow2"><feGaussianBlur stdDeviation="1.5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>
+      </defs>
+      <g filter="url(#glow2)" stroke="url(#gfade)" stroke-width="0.5" fill="none">
+        <!-- Horizontals -->
+        <line x1="0" y1="400" x2="1400" y2="310"/>
+        <line x1="0" y1="400" x2="1400" y2="290"/>
+        <line x1="0" y1="400" x2="1400" y2="268"/>
+        <line x1="0" y1="400" x2="1400" y2="244"/>
+        <line x1="0" y1="400" x2="1400" y2="218"/>
+        <line x1="0" y1="400" x2="1400" y2="188"/>
+        <line x1="0" y1="400" x2="1400" y2="154"/>
+        <line x1="0" y1="400" x2="1400" y2="115"/>
+        <line x1="0" y1="400" x2="1400" y2="68"/>
+        <!-- Verticals (vanishing point 700,60) -->
+        <line x1="700" y1="60" x2="0" y2="400"/>
+        <line x1="700" y1="60" x2="120" y2="400"/>
+        <line x1="700" y1="60" x2="240" y2="400"/>
+        <line x1="700" y1="60" x2="360" y2="400"/>
+        <line x1="700" y1="60" x2="480" y2="400"/>
+        <line x1="700" y1="60" x2="600" y2="400"/>
+        <line x1="700" y1="60" x2="700" y2="400"/>
+        <line x1="700" y1="60" x2="800" y2="400"/>
+        <line x1="700" y1="60" x2="920" y2="400"/>
+        <line x1="700" y1="60" x2="1040" y2="400"/>
+        <line x1="700" y1="60" x2="1160" y2="400"/>
+        <line x1="700" y1="60" x2="1280" y2="400"/>
+        <line x1="700" y1="60" x2="1400" y2="400"/>
+      </g>
+    </svg>
+    <div class="synth-horizon"></div>
+    <!-- Particles -->
+    <div class="particle" style="left:12%;bottom:30%;width:2px;height:2px;--d:5s;--delay:0s;"></div>
+    <div class="particle" style="left:27%;bottom:20%;width:3px;height:3px;--d:7s;--delay:1.2s;"></div>
+    <div class="particle" style="left:44%;bottom:25%;width:2px;height:2px;--d:4.5s;--delay:0.4s;"></div>
+    <div class="particle" style="left:58%;bottom:15%;width:3px;height:3px;--d:6s;--delay:2.1s;"></div>
+    <div class="particle" style="left:73%;bottom:28%;width:2px;height:2px;--d:5.5s;--delay:1s;"></div>
+    <div class="particle" style="left:88%;bottom:20%;width:3px;height:3px;--d:8s;--delay:3s;"></div>
+    <div class="particle" style="left:20%;bottom:18%;width:2px;height:2px;background:var(--amber);--d:6s;--delay:0.7s;opacity:0.6;"></div>
+    <div class="particle" style="left:62%;bottom:22%;width:2px;height:2px;background:var(--amber);--d:5s;--delay:2.5s;opacity:0.6;"></div>
+  </div>
+
+  <div class="cloud-inner container">
+    <p class="t-label mb-3">Servidores Cloud</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s6);align-items:end;margin-bottom:var(--s6);">
+      <h2 class="t-h2">Servidor cloud com fatura previsível em real. Suporte em português. SLA de 99,982%.</h2>
+      <div>
+        <p class="t-body-lg mb-4">Hospede aplicações, bancos de dados e sites em infraestrutura dedicada com datacenter Tier III certificado. Sem surprise billing. Sem ticket em inglês.</p>
+        <a href="#" class="btn btn-primary">Fale com um especialista</a>
+      </div>
+    </div>
+
+    <!-- Bento grid -->
+    <div class="bento">
+      <div class="bento-card wide">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--s3);">
+          <div class="bento-icon">
+            <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <span class="t-label">Disponibilidade</span>
+        </div>
+        <div class="bento-metric">99<span class="unit">,982%</span></div>
+        <div class="bento-label">SLA Tier III · Uptime Institute</div>
+        <p class="bento-body" style="margin-top:10px;">Redundância total em energia, refrigeração e conectividade. Não é promessa de marketing: é certificação auditável com crédito automático em contrato.</p>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-icon">
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="bento-metric">&lt;0<span class="unit">,5ms</span></div>
+        <div class="bento-label">Latência de storage</div>
+        <p class="bento-body" style="margin-top:8px;">NVMe All-Flash com 500K+ IOPS.</p>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-icon">
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="bento-metric">2<span class="unit"> DCs</span></div>
+        <div class="bento-label">Campinas + Osasco</div>
+        <p class="bento-body" style="margin-top:8px;">Redundância geográfica no Estado de São Paulo.</p>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-icon">
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="bento-metric">pt<span class="unit">-BR</span></div>
+        <div class="bento-label">Suporte sem tradução</div>
+        <p class="bento-body" style="margin-top:8px;">Atendimento humano em português, sem Tier 1 genérico.</p>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-icon">
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="bento-metric">R$<span class="unit"> fixo</span></div>
+        <div class="bento-label">Sem variação cambial</div>
+        <p class="bento-body" style="margin-top:8px;">Contrato em real, fatura previsível, sem egress surpresa.</p>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-icon">
+          <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="bento-metric">Dell<span class="unit"> ™</span></div>
+        <div class="bento-label">100% desde 2016</div>
+        <p class="bento-body" style="margin-top:8px;">Infraestrutura homogênea Dell Technologies. Performance previsível.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ PAGE SEP ════════════════ -->
+<div class="page-sep"><span class="t-label">/backup — ripple background + pricing card</span></div>
+
+<!-- ════════════════════════════════ BACKUP ════════════════════════════════ -->
+<section class="backup">
+  <div class="backup-bg"></div>
+  <div class="ripples">
+    <div class="ripple-ring" style="width:160px;height:160px;animation-delay:0s;"></div>
+    <div class="ripple-ring" style="width:320px;height:320px;animation-delay:1s;"></div>
+    <div class="ripple-ring" style="width:500px;height:500px;animation-delay:2s;"></div>
+    <div class="ripple-ring" style="width:700px;height:700px;animation-delay:3s;"></div>
+    <div class="ripple-ring" style="width:920px;height:920px;animation-delay:4s;"></div>
+  </div>
+
+  <div class="container">
+    <div class="backup-inner">
+      <div>
+        <p class="t-label mb-3">Backup Gerenciado</p>
+        <h2 class="backup-question">Quando foi a última vez que você testou a restauração do seu backup?</h2>
+        <p class="t-body-lg mb-4" style="max-width:480px;">A ProDB entrega as duas coisas: o backup diário automático e o suporte humano que acompanha a restauração quando você precisa.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;max-width:380px;margin-bottom:var(--s5);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="p-res-dot"></div>
+            <span class="t-body">Backup diário automático, sem intervenção manual</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="p-res-dot"></div>
+            <span class="t-body">Dados no datacenter Tier III em solo brasileiro</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="p-res-dot"></div>
+            <span class="t-body">Restauração assistida pela equipe em português</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="p-res-dot"></div>
+            <span class="t-body">ISO 27001 · PCI-DSS · dados criptografados AES-256</span>
+          </div>
+        </div>
+        <a href="#" class="btn btn-primary">Começar teste grátis</a>
+      </div>
+
+      <!-- Plan card -->
+      <div class="plan-card">
+        <div class="plan-top"></div>
+        <div class="plan-body">
+          <div class="plan-name">Plano Avançado</div>
+          <div class="plan-price">
+            <span class="plan-price-val">R$ 306</span>
+            <span class="plan-price-detail">/mês</span>
+          </div>
+          <ul class="plan-features">
+            <li class="plan-feature"><div class="plan-check">✓</div>1 TB de armazenamento</li>
+            <li class="plan-feature"><div class="plan-check">✓</div>Backup diário automático</li>
+            <li class="plan-feature"><div class="plan-check">✓</div>1 licença OBM incluída</li>
+            <li class="plan-feature"><div class="plan-check">✓</div>Retenção de 90 dias configurável</li>
+            <li class="plan-feature"><div class="plan-check">✓</div>Suporte via e-mail em português</li>
+            <li class="plan-feature"><div class="plan-check">✓</div>Datacenter Tier III · Ascenty</li>
+          </ul>
+          <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;">Começar teste grátis</a>
+          <div class="trial-note" style="margin-top:var(--s2);">
+            <svg class="icon sm" viewBox="0 0 24 24" style="color:var(--amber);flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            15 dias grátis · Sem cartão de crédito · Cancele quando quiser
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ PAGE SEP ════════════════ -->
+<div class="page-sep"><span class="t-label">/seja-um-parceiro — animated beam vertical</span></div>
+
+<!-- ════════════════════════════════ PARTNER ════════════════════════════════ -->
+<section class="partner">
+  <div class="container">
+    <div class="partner-inner">
+      <div>
+        <p class="t-label mb-3">Programa de Parceiros</p>
+        <h2 class="t-h2 mb-3">Você já vende soluções de TI. Comece a ganhar comissão recorrente também.</h2>
+        <p class="t-body-lg mb-4" style="max-width:480px;">Para consultores, integradores e revendedores que querem adicionar cloud e backup ao portfólio sem investir em infraestrutura própria.</p>
+        <div class="p-stats-row">
+          <div class="p-stat">
+            <span class="p-stat-val">30<span class="u">%</span></span>
+            <span class="p-stat-label">margem recorrente</span>
+          </div>
+          <div style="width:1px;background:var(--border);height:48px;align-self:center;"></div>
+          <div class="p-stat">
+            <span class="p-stat-val">R$<span class="u"> 0</span></span>
+            <span class="p-stat-label">taxa de adesão</span>
+          </div>
+          <div style="width:1px;background:var(--border);height:48px;align-self:center;"></div>
+          <div class="p-stat">
+            <span class="p-stat-val">2<span class="u">h</span></span>
+            <span class="p-stat-label">resposta oportunidades</span>
+          </div>
+        </div>
+        <div style="margin-top:var(--s5);">
+          <a href="#" class="btn btn-primary">Quero ser um parceiro</a>
+        </div>
+      </div>
+
+      <!-- Beam diagram vertical -->
+      <div style="display:flex;justify-content:center;">
+        <div class="beam-flow" style="width:280px;">
+          <div class="beam-box">
+            <div class="beam-box-icon">
+              <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <div class="beam-box-label">Parceiro</div>
+              <div class="beam-box-sub">consultor · MSP · integrador</div>
+            </div>
+          </div>
+
+          <div class="beam-connector">
+            <div class="beam-line-v">
+              <div class="beam-pulse"></div>
+            </div>
+          </div>
+
+          <div class="beam-box center-box">
+            <div class="beam-box-icon">
+              <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <div class="beam-box-label">ProDB</div>
+              <div class="beam-box-sub">infraestrutura + suporte</div>
+            </div>
+          </div>
+
+          <div class="beam-connector">
+            <div class="beam-line-v">
+              <div class="beam-pulse"></div>
+            </div>
+          </div>
+
+          <div class="beam-box">
+            <div class="beam-box-icon">
+              <svg class="icon" viewBox="0 0 24 24" style="color:var(--cyan);"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div>
+              <div class="beam-box-label">Cliente final</div>
+              <div class="beam-box-sub">empresa brasileira</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ SUPPORT ════════════════════════════════ -->
+<section class="support">
+  <div class="support-amber-orb"></div>
+  <div class="container">
+    <div class="support-grid">
+      <div>
+        <div class="amber-pill">
+          <div class="amber-dot"></div>
+          Suporte humano 24/7
+        </div>
+        <h2 class="t-h2 mb-3">Quem atende quando algo dá errado</h2>
+        <p class="t-body-lg mb-4" style="max-width:460px;">Quando você abre um chamado, alguém da equipe técnica ProDB atende. Em português. Com acesso ao ambiente. Sem roteamento para terceiros.</p>
+        <a href="#" class="btn btn-primary" style="background:var(--amber);color:var(--text-inv);">Fale com um especialista</a>
+      </div>
+      <div class="support-stats">
+        <div class="ss-card">
+          <div class="ss-val">&lt;15min</div>
+          <div class="ss-label">resposta em incidentes críticos (P1)</div>
+        </div>
+        <div class="ss-card">
+          <div class="ss-val">24/7</div>
+          <div class="ss-label">monitoramento proativo NOC</div>
+        </div>
+        <div class="ss-card">
+          <div class="ss-val">pt-BR</div>
+          <div class="ss-label">suporte sempre em português</div>
+        </div>
+        <div class="ss-card">
+          <div class="ss-val">0</div>
+          <div class="ss-label">tickets em inglês necessários</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ LEGEND ════════════════════════════════ -->
+<div class="legend-section" style="background:var(--bg-surface);">
+  <div class="container">
+    <div class="legend-title">Resumo do design system · elementos e onde ficam</div>
+    <div class="legend-grid">
+      <div class="legend-card">
+        <div class="legend-name">Syne 800</div>
+        <div class="legend-where">Display font exclusivo para todos os títulos e headlines. Grotesk com personalidade forte.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Mesh Gradient (3 cores)</div>
+        <div class="legend-where">Hero home + hero cloud: navy #060C18 + indigo escuro + teal escuro. Fundo sofisticado.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Animated Beam</div>
+        <div class="legend-where">Hero SVG (home) + diagrama vertical parceiro. Linhas luminosas discretas.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Marquee certif.</div>
+        <div class="legend-where">Strip imediatamente abaixo do hero. 9 certs + parceiros em loop contínuo.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Scroll-trigger cards</div>
+        <div class="legend-where">Cards das 3 dores (home), bento features (cloud), seções de empresa.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Number Counter</div>
+        <div class="legend-where">Seção de stats (home + empresa): 14 anos, 550+, 99,982%, 9 certs.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Circular Text</div>
+        <div class="legend-where">Hero da página /empresa. Gira lentamente com as 9 certificações.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Synthwave Grid</div>
+        <div class="legend-where">Fundo da página /servidores-cloud. Grade de perspectiva + partículas discretas.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Ripple Background</div>
+        <div class="legend-where">Seção de backup. Ondas concêntricas = sensação de proteção e alcance.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Bento Grid</div>
+        <div class="legend-where">Features de cloud: layout assimétrico wide + regular. Editorial, moderno.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Amber Accent</div>
+        <div class="legend-where">Seção suporte em TODAS as páginas. Cor quente = momento humano.</div>
+      </div>
+      <div class="legend-card">
+        <div class="legend-name">Noise + Grid overlay</div>
+        <div class="legend-where">Hero home: textura sutil de ruído + grid 60px quase invisível. Profundidade.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Scroll-trigger: problem cards */
+const obs1 = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.querySelectorAll('.problem-card').forEach(c => c.classList.add('visible'));
+  });
+}, { threshold: 0.15 });
+document.querySelector('#problem-grid') && obs1.observe(document.querySelector('#problem-grid'));
+
+/* Number counter */
+function animateCounter(el, target, duration = 1600) {
+  const start = performance.now();
+  const step = ts => {
+    const p = Math.min((ts - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3); // ease-out cubic
+    el.textContent = Math.floor(ease * target);
+    if (p < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+
+const obs2 = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.count[data-to]').forEach(el => {
+        const to = parseInt(el.dataset.to);
+        animateCounter(el, to);
+      });
+      obs2.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelector('#stats-grid') && obs2.observe(document.querySelector('#stats-grid'));
+</script>
+</body>
+</html>

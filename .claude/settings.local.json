@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(npx *)",
-      "WebFetch(domain:prodb.com.br)"
+      "WebFetch(domain:prodb.com.br)",
+      "Bash(dir C:\\\\Users\\\\guilh\\\\OneDrive\\\\Documents\\\\BlackElephant\\\\Clientes\\\\ProDB\\\\site-prodb\\\\copy *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\guilh\\\\OneDrive\\\\Documents\\\\BlackElephant\\\\Clientes\\\\ProDB\\\\site-prodb\" -Recurse -Depth 1 | Where-Object { $_.PSIsContainer -eq $false })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\guilh\\\\OneDrive\\\\Documents\\\\BlackElephant\\\\Clientes\\\\ProDB\\\\site-prodb\" -Force | Select-Object Name, @{Name=\"Type\"; Expression={if\\($_.PSIsContainer\\){\"DIR\"}else{\"FILE\"}}} | Format-Table -AutoSize)",
+      "Bash(bash *)",
+      "Bash(xargs cat *)",
+      "Bash(python *)"
     ]
   }
 }

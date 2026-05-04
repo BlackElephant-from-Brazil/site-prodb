@@ -30,16 +30,18 @@ export function BackupPricingSection() {
       <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
         <div className="mb-12 max-w-2xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
-            Backup gerenciado
+            Planos de backup
           </p>
           <h2
             id="pricing-heading"
-            className="text-2xl font-bold text-slate-900 md:text-3xl text-balance"
+            className="text-3xl font-black text-slate-900 md:text-4xl text-balance leading-tight"
           >
-            Proteção de dados a partir de R$ 99/mês
+            Backup automático com restauração testada. A partir de R$ 99/mês.
           </h2>
-          <p className="mt-3 text-slate-600">
-            Planos com cobrança previsível em reais. Sem taxa de setup.
+          <p className="mt-3 text-slate-600 leading-relaxed">
+            Você só sabe que o backup funciona quando precisa restaurar. Por isso,
+            simulamos a restauração com você nos primeiros dias e documentamos o RTO
+            real do seu ambiente em contrato.
           </p>
         </div>
 
@@ -127,9 +129,9 @@ export function BackupPricingSection() {
         {/* Trust strip under pricing */}
         <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-slate-500">
           <span>✓ ISO 27001</span>
-          <span>✓ Dados armazenados no Brasil</span>
-          <span>✓ LGPD-compliant</span>
-          <span>✓ Respondemos em até 2h úteis</span>
+          <span>✓ Criptografia AES-256</span>
+          <span>✓ Restauração testada</span>
+          <span>✓ Resposta em até 2h úteis</span>
         </div>
       </div>
 

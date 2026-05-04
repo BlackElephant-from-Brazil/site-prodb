@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Archivo, DM_Sans } from 'next/font/google'
 import './globals.css'
 
 const geistSans = Geist({
@@ -11,6 +11,20 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+  display: 'swap',
+})
+
+const archivo = Archivo({
+  variable: '--font-archivo',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+})
+
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
   display: 'swap',
 })
 
@@ -38,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} h-full scroll-smooth antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${archivo.variable} ${dmSans.variable} h-full scroll-smooth antialiased`}
     >
       <head>
         {/* GA4 — fires only after cookie consent; see lib/analytics.ts */}
@@ -71,7 +85,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `(function(c,l,a,r,i,t,y){...})(window, document, "clarity", "script", "YOUR_CLARITY_ID");` }} />
         */}
       </head>
-      <body className="min-h-dvh flex flex-col bg-slate-50 text-slate-700">
+      <body className="min-h-dvh flex flex-col bg-slate-50 text-slate-700 font-sans">
+        {/* Hidden SVG filter definitions for Liquid Glass refraction — must be in DOM before any url(#id) CSS reference */}
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', pointerEvents: 'none' }}
+        >
+          <defs>
+            <filter id="lg-refract" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.65 0.75" numOctaves="3" seed="2" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="50" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            <filter id="lg-soft" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.5 0.6" numOctaves="2" seed="5" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+          </defs>
+        </svg>
         <a href="#main-content" className="skip-link">
           Pular para o conteúdo principal
         </a>

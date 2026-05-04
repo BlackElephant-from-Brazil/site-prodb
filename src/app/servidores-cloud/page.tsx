@@ -4,6 +4,7 @@ import MarketingLayout from '../layout-marketing'
 import { CloudConfigurator } from '@/components/sections/CloudConfigurator'
 import { CertificationsSection } from '@/components/sections/CertificationsSection'
 import { CTABandSection } from '@/components/sections/CTABandSection'
+import { SynthwaveGrid } from '@/components/ui/SynthwaveGrid'
 import { useCases, migrationSteps, slaTable, cloudFaqs } from '@/content/cloud-plans'
 import { Check } from 'lucide-react'
 import { LinkButton } from '@/components/ui/Button'
@@ -12,7 +13,7 @@ import { Building2, ShieldCheck, Layers, Heart, ShoppingCart } from 'lucide-reac
 export const metadata: Metadata = {
   title: 'Servidores Cloud Gerenciados | ProDB Tecnologia',
   description:
-    'Servidores cloud brasileiros com SLA 99,99%, SSD NVMe, suporte humano 24/7 em português. IaaS, Gerenciado e Full Managed. Configure e solicite proposta online.',
+    'Servidores cloud brasileiros com SLA 99,982%, SSD NVMe, suporte humano 24/7 em português. IaaS, Gerenciado e Full Managed. Configure e solicite proposta online.',
 }
 
 const iconMap = {
@@ -36,24 +37,34 @@ export default function ServidoresCloudPage() {
   return (
     <MarketingLayout>
       {/* Hero */}
-      <section className="bg-navy-900 text-white py-20 md:py-32 relative overflow-hidden">
+      <section
+        className="relative overflow-hidden text-white pt-28 pb-20 md:pt-32 md:pb-32"
+        style={{ background: '#060E1C' }}
+      >
         <div
           aria-hidden="true"
-          className="absolute inset-0 opacity-10"
-          style={{ background: 'radial-gradient(ellipse at 70% 40%, #22D3EE 0%, transparent 50%)' }}
+          className="pointer-events-none absolute inset-0 opacity-15"
+          style={{ background: 'radial-gradient(ellipse at 70% 40%, rgba(14,165,201,0.3) 0%, transparent 50%)' }}
         />
         <div className="relative mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
           <div className="max-w-3xl">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-cyan-400">
+            <p
+              className="mb-4 text-xs font-semibold uppercase tracking-widest"
+              style={{ color: '#0EA5C9' }}
+            >
               Servidores Cloud
             </p>
-            <h1 className="mb-5 text-4xl font-bold leading-tight tracking-tight md:text-5xl text-balance">
+            <h1
+              className="mb-5 text-4xl font-black leading-tight md:text-5xl text-balance"
+              style={{ lineHeight: 1.05 }}
+            >
               Infraestrutura cloud brasileira.{' '}
-              <span className="text-cyan-400">SLA 99,99% em contrato.</span>
+              <span style={{ color: '#0EA5C9' }}>SLA 99,982% em contrato.</span>
             </h1>
-            <p className="mb-8 text-lg text-slate-300 leading-relaxed max-w-2xl">
+            <p className="mb-8 text-lg leading-relaxed max-w-2xl" style={{ color: 'rgba(232,240,250,0.7)' }}>
               Servidores gerenciados com SSD NVMe, redundância Tier III e suporte humano em
-              português — sem taxas de egresso surpresa, sem contrato mínimo nos planos de catálogo.
+              português. Sem taxas de egresso surpresa. Sem contrato mínimo nos planos de catálogo.
+              Cobrança previsível em reais.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <LinkButton href="#configurador" size="lg" variant="primary">
@@ -63,11 +74,14 @@ export default function ServidoresCloudPage() {
                 Falar com especialista
               </LinkButton>
             </div>
-            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-400">
-              <span>✓ Datacenters Tier III</span>
-              <span>✓ Dados no Brasil</span>
-              <span>✓ Suporte 24/7 em português</span>
-              <span>✓ Sem lock-in</span>
+            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm" style={{ color: 'rgba(114,148,184,0.7)' }}>
+              <span>Datacenters Tier III</span>
+              <span>·</span>
+              <span>Dados no Brasil</span>
+              <span>·</span>
+              <span>Suporte 24/7 em português</span>
+              <span>·</span>
+              <span>Sem lock-in</span>
             </div>
           </div>
         </div>
@@ -76,7 +90,7 @@ export default function ServidoresCloudPage() {
       {/* Social proof strip */}
       <section className="bg-white border-b border-slate-100 py-5">
         <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 justify-center md:justify-start text-sm text-slate-600">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 justify-center md:justify-start text-sm text-slate-500">
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-success-500 animate-pulse" aria-hidden="true" />
               <span>Todos os sistemas operacionais em tempo real</span>
@@ -84,19 +98,19 @@ export default function ServidoresCloudPage() {
             <span className="hidden md:inline text-slate-200">|</span>
             <span>Provisionamento em 4–8 horas</span>
             <span className="hidden md:inline text-slate-200">|</span>
-            <span>ISO 27001 · SOC 2 Tipo II</span>
+            <span>ISO 27001 · SOC</span>
           </div>
         </div>
       </section>
 
       {/* Use cases */}
-      <section id="casos-de-uso" className="bg-slate-50 py-16 md:py-24" aria-labelledby="use-cases-heading">
+      <section id="casos-de-uso" className="py-16 md:py-24" style={{ background: '#F4F7FB' }} aria-labelledby="use-cases-heading">
         <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
           <div className="mb-10">
-            <h2 id="use-cases-heading" className="text-2xl font-bold text-slate-900 md:text-3xl text-balance">
+            <h2 id="use-cases-heading" className="text-3xl font-black text-slate-900 md:text-4xl text-balance leading-tight">
               Para quem é o servidor cloud ProDB?
             </h2>
-            <p className="mt-2 text-slate-600 max-w-2xl">
+            <p className="mt-2 text-slate-500 max-w-2xl">
               Workloads que exigem dados no Brasil, suporte em português e SLA em contrato.
             </p>
           </div>
@@ -109,13 +123,16 @@ export default function ServidoresCloudPage() {
                   key={uc.id}
                   className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:border-cyan-300 hover:shadow-md transition-all"
                 >
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-400/10">
-                    <Icon size={20} className="text-cyan-600" aria-hidden="true" />
+                  <div
+                    className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl"
+                    style={{ background: 'rgba(14,165,201,0.1)' }}
+                  >
+                    <Icon size={20} style={{ color: '#0EA5C9' }} aria-hidden="true" />
                   </div>
-                  <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
                     {uc.vertical}
                   </p>
-                  <h3 className="mb-2 text-base font-bold text-slate-900">{uc.title}</h3>
+                  <h3 className="mb-2 text-base font-black text-slate-900">{uc.title}</h3>
                   <p className="text-sm text-slate-600 leading-relaxed mb-4">{uc.description}</p>
                   <div className="flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2 border border-slate-100">
                     <Check size={14} className="text-success-500 shrink-0" aria-hidden="true" />
@@ -131,26 +148,42 @@ export default function ServidoresCloudPage() {
       {/* Interactive Configurator */}
       <CloudConfigurator />
 
-      {/* Tech stack */}
-      <section className="bg-navy-900 text-white py-16 md:py-20" aria-labelledby="tech-stack-heading">
-        <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
-          <h2 id="tech-stack-heading" className="mb-2 text-2xl font-bold md:text-3xl text-balance">
+      {/* Tech stack — synthwave grid section */}
+      <section
+        className="relative overflow-hidden text-white py-16 md:py-24"
+        style={{ background: '#060E1C' }}
+        aria-labelledby="tech-stack-heading"
+      >
+        <SynthwaveGrid particleCount={6} />
+
+        <div className="relative mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
+          <h2
+            id="tech-stack-heading"
+            className="mb-2 text-3xl font-black md:text-4xl text-balance leading-tight"
+          >
             A infraestrutura que roda por baixo
           </h2>
-          <p className="mb-10 text-slate-400 max-w-xl">
-            Não vendemos commodity. Cada camada foi escolhida por desempenho e confiabilidade.
+          <p className="mb-10 max-w-xl" style={{ color: 'rgba(114,148,184,0.8)' }}>
+            Não vendemos commodity. Cada camada foi escolhida por desempenho e confiabilidade comprovados.
           </p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {techStack.map(item => (
               <div
                 key={item.label}
-                className="rounded-xl border border-navy-700 bg-navy-800 p-5"
+                className="rounded-xl p-5 border backdrop-blur-sm"
+                style={{
+                  background: 'rgba(11,24,40,0.8)',
+                  borderColor: 'rgba(14,165,201,0.15)',
+                }}
               >
-                <p className="text-xs font-semibold uppercase tracking-wider text-cyan-400 mb-1">
+                <p
+                  className="text-xs font-semibold uppercase tracking-wider mb-1"
+                  style={{ color: '#0EA5C9' }}
+                >
                   {item.label}
                 </p>
-                <p className="text-base font-bold text-white mb-1">{item.value}</p>
-                <p className="text-xs text-slate-400 leading-relaxed">{item.detail}</p>
+                <p className="text-base font-black text-white mb-1">{item.value}</p>
+                <p className="text-xs leading-relaxed" style={{ color: 'rgba(114,148,184,0.7)' }}>{item.detail}</p>
               </div>
             ))}
           </div>
@@ -161,37 +194,47 @@ export default function ServidoresCloudPage() {
       <section id="migracao" className="bg-white py-16 md:py-24" aria-labelledby="migration-heading">
         <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
           <div className="max-w-2xl mb-12">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-cyan-600">
+            <p
+              className="mb-2 text-xs font-semibold uppercase tracking-widest"
+              style={{ color: '#0EA5C9' }}
+            >
               Migração assistida
             </p>
-            <h2 id="migration-heading" className="text-2xl font-bold text-slate-900 md:text-3xl text-balance">
+            <h2 id="migration-heading" className="text-3xl font-black text-slate-900 md:text-4xl text-balance leading-tight">
               Migramos com você. Sem downtime não planejado.
             </h2>
             <p className="mt-3 text-slate-600">
-              Nosso processo de migração tem quatro etapas — cada uma com entregável e responsável definido.
+              Nosso processo tem quatro etapas — cada uma com entregável e responsável definido.
               Você nunca fica sem saber o que está acontecendo.
             </p>
           </div>
 
           <div className="relative">
-            {/* Connector line (desktop) */}
             <div
               aria-hidden="true"
-              className="absolute top-8 left-8 right-8 h-px bg-slate-200 hidden md:block"
+              className="absolute top-8 left-8 right-8 h-px bg-slate-100 hidden md:block"
             />
             <div className="grid gap-8 md:grid-cols-4">
               {migrationSteps.map((step, i) => (
                 <div key={step.step} className="relative flex flex-col gap-4">
                   <div className="flex items-center gap-3 md:flex-col md:items-start md:gap-2">
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-navy-900 text-white relative z-10">
-                      <span className="mono-stat text-xl font-black text-cyan-400">{step.step}</span>
+                    <div
+                      className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl relative z-10"
+                      style={{ background: '#060E1C' }}
+                    >
+                      <span
+                        className="text-xl font-black"
+                        style={{ color: '#0EA5C9', fontFamily: 'var(--font-display)' }}
+                      >
+                        {step.step}
+                      </span>
                     </div>
                     <div className="md:hidden">
-                      <p className="text-xs font-semibold text-slate-500">{step.duration}</p>
+                      <p className="text-xs font-semibold text-slate-400">{step.duration}</p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="mb-1 text-base font-bold text-slate-900">{step.title}</h3>
+                    <h3 className="mb-1 text-base font-black text-slate-900">{step.title}</h3>
                     <p className="text-sm text-slate-600 leading-relaxed">{step.description}</p>
                   </div>
                   <div className="hidden md:block">
@@ -200,7 +243,7 @@ export default function ServidoresCloudPage() {
                     </span>
                   </div>
                   {i < migrationSteps.length - 1 && (
-                    <div aria-hidden="true" className="absolute left-8 top-16 w-px h-8 bg-slate-200 md:hidden" />
+                    <div aria-hidden="true" className="absolute left-8 top-16 w-px h-8 bg-slate-100 md:hidden" />
                   )}
                 </div>
               ))}
@@ -210,13 +253,13 @@ export default function ServidoresCloudPage() {
       </section>
 
       {/* SLA table */}
-      <section id="sla" className="bg-slate-50 py-16 md:py-20 overflow-x-auto" aria-labelledby="sla-heading">
+      <section id="sla" className="py-16 md:py-20 overflow-x-auto" style={{ background: '#F4F7FB' }} aria-labelledby="sla-heading">
         <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
-          <h2 id="sla-heading" className="mb-2 text-2xl font-bold text-slate-900 md:text-3xl">
+          <h2 id="sla-heading" className="mb-2 text-3xl font-black text-slate-900 md:text-4xl">
             SLA em contrato — não em marketing
           </h2>
-          <p className="mb-8 text-slate-600 max-w-xl">
-            Cada métrica abaixo está disponível no corpo do contrato, com crédito automático caso não cumprida.
+          <p className="mb-8 text-slate-500 max-w-xl">
+            Cada métrica abaixo está no corpo do contrato, com crédito automático caso não cumprida.
           </p>
 
           <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm min-w-[640px]">
@@ -225,25 +268,25 @@ export default function ServidoresCloudPage() {
                 <tr className="border-b border-slate-200 bg-slate-50">
                   <th className="py-4 px-6 text-left font-semibold text-slate-900">Métrica</th>
                   <th className="py-4 px-4 text-center font-semibold text-slate-700">IaaS / Gerenciado</th>
-                  <th className="py-4 px-4 text-center font-semibold text-cyan-600">Full Managed</th>
-                  <th className="py-4 px-4 text-left text-xs font-medium text-slate-500">Observação</th>
+                  <th className="py-4 px-4 text-center font-semibold" style={{ color: '#0EA5C9' }}>Full Managed</th>
+                  <th className="py-4 px-4 text-left text-xs font-medium text-slate-400">Observação</th>
                 </tr>
               </thead>
               <tbody>
                 {slaTable.map((row, i) => (
                   <tr key={row.metric} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}>
                     <td className="py-3 px-6 font-medium text-slate-800">{row.metric}</td>
-                    <td className="py-3 px-4 text-center text-slate-700 mono-stat">{row.standard}</td>
-                    <td className="py-3 px-4 text-center font-semibold text-cyan-700 mono-stat">{row.premium}</td>
-                    <td className="py-3 px-4 text-xs text-slate-500">{row.note}</td>
+                    <td className="py-3 px-4 text-center text-slate-700" style={{ fontFamily: 'var(--font-mono)' }}>{row.standard}</td>
+                    <td className="py-3 px-4 text-center font-semibold" style={{ color: '#0EA5C9', fontFamily: 'var(--font-mono)' }}>{row.premium}</td>
+                    <td className="py-3 px-4 text-xs text-slate-400">{row.note}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <p className="mt-4 text-xs text-slate-500">
-            * Disponibilidade medida mensalmente. Créditos emitidos automaticamente na fatura seguinte.
+          <p className="mt-4 text-xs text-slate-400">
+            Disponibilidade medida mensalmente. Créditos emitidos automaticamente na fatura seguinte.
             Consulte o contrato para termos completos.
           </p>
         </div>
@@ -253,10 +296,10 @@ export default function ServidoresCloudPage() {
       <section className="bg-white py-16 md:py-20">
         <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
           <div className="max-w-3xl">
-            <h2 className="mb-8 text-2xl font-bold text-slate-900 md:text-3xl">
+            <h2 className="mb-8 text-2xl font-black text-slate-900 md:text-3xl">
               Perguntas frequentes
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {cloudFaqs.map(faq => (
                 <details key={faq.q} className="group rounded-xl border border-slate-200 bg-slate-50 overflow-hidden">
                   <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-4 font-semibold text-slate-900 hover:bg-slate-100 transition-colors list-none">
@@ -276,7 +319,7 @@ export default function ServidoresCloudPage() {
       <CertificationsSection />
       <CTABandSection
         heading="Pronto para migrar sua infraestrutura para o Brasil?"
-        subheading="Monte sua configuração no configurador acima ou fale direto com um especialista."
+        subheading="Monte sua configuração ou fale direto com um especialista. Respondemos em até 2 horas úteis."
         primaryLabel="Montar minha configuração"
         primaryHref="#configurador"
         secondaryLabel="Falar com especialista"

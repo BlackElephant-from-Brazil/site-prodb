@@ -6,12 +6,12 @@ const solutions = [
   {
     Icon: Server,
     name: 'Servidores Cloud',
-    tagline: 'Infraestrutura gerenciada, sem surpresas operacionais',
+    tagline: 'Infraestrutura com SLA contratual de 99,982%',
     features: [
-      'vCPU, RAM e SSD configuráveis sob demanda',
-      'Alta disponibilidade com Tier III e SLA 99,99%',
-      'Monitoramento proativo 24/7 incluído',
-      'Migração assistida pela nossa equipe',
+      'Configure vCPU, RAM e SSD NVMe em minutos',
+      'Migração assistida sem downtime planejado',
+      'NOC ativo 24h, sem custo adicional',
+      'Em produção em 4 a 8 horas após o contrato',
     ],
     cta: 'Configurar meu servidor',
     href: '/servidores-cloud',
@@ -21,12 +21,12 @@ const solutions = [
   {
     Icon: HardDrive,
     name: 'Backup Gerenciado',
-    tagline: 'Proteção de dados com RPO e RTO definidos em contrato',
+    tagline: 'Backup com restauração testada, RPO e RTO no contrato',
     features: [
-      'A partir de R$ 99/mês — cobrança previsível em reais',
-      'Backup diário automático com agente OBM',
-      'Teste grátis de 15 dias no plano Avançado',
-      'Restauração granular: arquivo, pasta, sistema',
+      'Plano Essencial a partir de R$ 99/mês',
+      'Backup diário automático, sem intervenção',
+      'Plano Avançado: 15 dias grátis sem cartão',
+      'Restauração granular: arquivo, pasta ou sistema',
     ],
     cta: 'Começar teste grátis de 15 dias',
     href: '/backup',
@@ -42,16 +42,20 @@ export function SolutionsSection() {
       aria-labelledby="solutions-heading"
     >
       <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
-        <div className="mb-10">
+        <div className="mb-10 max-w-2xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
-            Nossas soluções
+            O que entregamos
           </p>
           <h2
             id="solutions-heading"
-            className="text-2xl font-bold text-slate-900 md:text-3xl text-balance"
+            className="text-3xl font-black text-slate-900 md:text-4xl text-balance leading-tight"
           >
-            Infraestrutura cloud completa, gerenciada pela ProDB
+            Servidores cloud e backup gerenciados pela mesma equipe técnica
           </h2>
+          <p className="mt-3 text-slate-600 leading-relaxed">
+            Mesmo SLA, mesmo time, mesma documentação. Tanto faz se o problema é no
+            servidor ou no backup, você fala com quem já conhece o seu ambiente.
+          </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">

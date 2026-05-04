@@ -46,17 +46,18 @@ export function CertificationsSection() {
       <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
         <div className="mb-12 max-w-2xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
-            Conformidade e governança
+            Auditoria e conformidade
           </p>
           <h2
             id="certs-heading"
-            className="text-2xl font-bold text-slate-900 md:text-3xl text-balance"
+            className="text-3xl font-black text-slate-900 md:text-4xl text-balance leading-tight"
           >
             Certificações que o seu compliance vai exigir
           </h2>
-          <p className="mt-3 text-slate-600">
-            9 certificações internacionais auditadas por organismos independentes.
-            Clique em cada uma para entender o que ela significa para a sua operação.
+          <p className="mt-3 text-slate-600 leading-relaxed">
+            Nove certificações auditadas por organismos independentes. Cada selo abaixo
+            abre uma explicação em linguagem simples do que ele cobre e por que importa
+            para a sua operação.
           </p>
         </div>
 

@@ -7,16 +7,20 @@ export function CustomersSection() {
       aria-labelledby="customers-heading"
     >
       <div className="mx-auto max-w-[1184px] px-4 md:px-6 xl:px-8">
-        <div className="mb-10">
+        <div className="mb-10 max-w-2xl">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
-            Clientes e parceiros
+            Em produção hoje
           </p>
           <h2
             id="customers-heading"
-            className="text-2xl font-bold text-slate-900 md:text-3xl"
+            className="text-3xl font-black text-slate-900 md:text-4xl text-balance leading-tight"
           >
-            Empresas que confiam na ProDB
+            550+ ambientes em produção, de várias indústrias
           </h2>
+          <p className="mt-3 text-slate-600 leading-relaxed">
+            Software houses, gestoras, e-commerces, fintechs. Cada logo abaixo é um
+            ambiente em produção 24/7 hoje, com SLA contratual e engenheiro de conta.
+          </p>
         </div>
 
         {/* Logo wall */}
